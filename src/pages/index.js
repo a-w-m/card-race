@@ -1,37 +1,39 @@
-import React from "react"
-<<<<<<< HEAD
+import React, { useState } from "react"
 // import { Link } from "gatsby"
 
 import Card from "../components/card"
+import { checkPropTypes } from "prop-types"
 // import Layout from "../components/layout"
 // import Image from "../components/image"
 // import SEO from "../components/seo"
 
-const IndexPage = () => (
-  <div>
-  <Card backgroundColor = "red"> Hi </Card>
-  <Card backgroundColor = "blue">Bye</Card>
-  <Card backgroundColor ="green">Okay</Card>
-  </div>
-=======
-import { Link } from "gatsby"
+const App = () => {
+  const cards = ["red", "blue", "red", "blue"]
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+  const [backgroundColor, setbackgroundColor] = useState("");
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
+  const [hasFlipped, setFlip] = useState(false);
+
+
+  const styles = { 
+    backgroundColor: backgroundColor,
+      color: "black",
+      border: ".1rem solid black"
+  }
+
+  const handleClick = (index) =>{
+    alert(index)
+  }
+
+
+
+  return (
+    <div>{cards.map((card, index) =>{
+        return <Card style = {{backgroundColor: card}} onClick = {() => handleClick(index)}>
+          {index}
+        </Card>})}
+        <div>Hello World</div>
     </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
->>>>>>> f5613d6355d5f5bffd0ba982ebeeb97960681f20
-)
-
-export default IndexPage
+  )
+}
+export default App

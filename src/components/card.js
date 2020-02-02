@@ -2,13 +2,17 @@ import React from "react"
 
 
 const Card = (props) => {
-   // const [flip, setFlip] = useState(false);
 
-   const {backgroundColor, children} = props;
+   let {style, onClick, children} = props;
+
+   
+
+
 
     return (
         <div
-        style = {{backgroundColor:backgroundColor}}>
+        style = {style}
+        onClick = {onClick}>
             {children}
         </div>
     )
