@@ -1,25 +1,19 @@
 import React from "react"
-
-
-const Card = (props) => {
-
-   let {style, onClick, children} = props;
-
-   
+import Icon  from "./icon.js"
+import styles from "./card.module.css" 
 
 
 
-    return (
-        <div
-        style = {style}
-        onClick = {onClick}>
-            {children}
-        </div>
-    )
 
+const Card = props => {
+  const {className, style, onClick} = props
+  
 
-
+  return (
+    <div className = {styles.card} style={style} onClick={onClick}>
+        <Icon className = {className}></Icon>
+    </div>
+  )
 }
 
-
-export default Card;
+export default Card

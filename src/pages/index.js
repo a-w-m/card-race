@@ -1,38 +1,35 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 // import { Link } from "gatsby"
 
-import Card from "../components/card"
-import { checkPropTypes } from "prop-types"
+import Deck from "../components/deck"
+
 // import Layout from "../components/layout"
 // import Image from "../components/image"
 // import SEO from "../components/seo"
 
 const App = () => {
-  const cards = ["red", "blue", "red", "blue"]
+  const [history, setHistory] = useState([])
 
-  const [backgroundColor, setbackgroundColor] = useState("");
-
-  const [hasFlipped, setFlip] = useState(false);
-
-
-  const styles = { 
-    backgroundColor: backgroundColor,
-      color: "black",
-      border: ".1rem solid black"
+  const handleClick = property => {
+    console.log(property)
+    setHistory(history => history.concat(property))
   }
 
-  const handleClick = (index) =>{
-    alert(index)
-  }
-
-
+  useEffect(() => {
+    if (history.length >= 2) {
+      if (
+        history.length % 2 == 0 &&
+        history[history.length - 1] === history[history.length - 2]
+      ) {
+        alert("match")
+        setHistory(history => [])
+      }
+    }
+  }, [history])
 
   return (
-    <div>{cards.map((card, index) =>{
-        return <Card style = {{backgroundColor: card}} onClick = {() => handleClick(index)}>
-          {index}
-        </Card>})}
-        <div>Hello World</div>
+    <div>
+      <Deck onClick ={handleClick}/>
     </div>
   )
 }

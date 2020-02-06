@@ -1,0 +1,18 @@
+:root{
+--main-color: #2C0F5B;
+--border-color: rgb(174, 171, 177);
+
+}
+.card {
+    background-color: var(--main-color);
+    color: white;
+    border: .25rem solid var(--border-color);
+    border-radius: .2rem;
+    width: 5rem;
+    height: 8rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
