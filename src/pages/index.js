@@ -9,27 +9,36 @@ import Deck from "../components/deck"
 
 const App = () => {
   const [history, setHistory] = useState([])
+  const [pointerEvent, setPointerEvent] = useState({pointerEvents:"auto"})
 
-  const handleClick = property => {
-    console.log(property)
-    setHistory(history => history.concat(property))
+
+  const updatePointer = (pointerEvent) => {
+    setPointerEvent(pointerEvent);
   }
 
   useEffect(() => {
-    if (history.length >= 2) {
+
+    if (history.length === 1) {
+      
+      console.log(pointerEvent)
+
+    }
+
+    else if (history.length >= 2) {
       if (
-        history.length % 2 == 0 &&
+        history.length % 2 === 0 &&
         history[history.length - 1] === history[history.length - 2]
       ) {
         alert("match")
         setHistory(history => [])
+       
       }
     }
-  }, [history])
+  }, [history, pointerEvent])
 
   return (
     <div>
-      <Deck onClick ={handleClick}/>
+      <Deck onClick ={updatePointer} pointerEvent ={pointerEvent}/>
     </div>
   )
 }

@@ -5,20 +5,37 @@ import icons from "./icons.module.css"
 import { checkPropTypes } from "prop-types"
 
 const Deck = (props) => {
- 
+
+  const handleClick = (pointerEvents) => {
+    props.onClick(pointerEvents)
+  }
+
+
 
   const createDeck = () => {
     const deck = []
+
     for (const property in icons) {
+     
       const card = (
         <Card
           key={property}
-          onClick={() => props.onClick(property)}
+          onClick={() => handleClick(props.style)}
           className={icons[property]}
+          style ={props.style}
         />
       )
 
-      deck.push(card, card)
+      const duplicate = (
+        <Card
+          key={`${property}-duplicate`}
+          onClick={() => handleClick(props.style)}
+          className={icons[property]}
+          style ={props.style}
+        />
+      )
+
+      deck.push(card, duplicate)
     }
     return deck
   }
