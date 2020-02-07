@@ -6,16 +6,11 @@ import styles from "./card.module.css"
 
 
 const Card = props => {
-  const {className, style, onClick} = props
+  const {className, id, onClick, history, color} = props
 
-  const handleClick = property => {
-        onClick(property)
-  }
- 
-  
 
   return (
-    <div className = {styles.card} style={style} onClick={() => handleClick(style)}>
+    <div className = {styles.card} onClick = {onClick} style = {history[history.length-1] === id ? color : {}}>
         <Icon className = {className}></Icon>
     </div>
   )

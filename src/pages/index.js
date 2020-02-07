@@ -9,19 +9,23 @@ import Deck from "../components/deck"
 
 const App = () => {
   const [history, setHistory] = useState([])
-  const [pointerEvent, setPointerEvent] = useState({pointerEvents:"auto"})
+  const [color, setColor] = useState({backgroundColor: "red"}) 
+  const [currentCard, setCurrentCard] = useState()
 
 
-  const updatePointer = (pointerEvent) => {
-    setPointerEvent(pointerEvent);
+  const updateColor = (param) => {
+    let newColor = param[0]
+    let card = param[1]
+
+    setHistory(history => history.concat(card))
+    setColor({...newColor});
+    console.log(color)
   }
-
+  
   useEffect(() => {
 
     if (history.length === 1) {
       
-      console.log(pointerEvent)
-
     }
 
     else if (history.length >= 2) {
@@ -34,11 +38,11 @@ const App = () => {
        
       }
     }
-  }, [history, pointerEvent])
+  }, [history, color])
 
   return (
     <div>
-      <Deck onClick ={updatePointer} pointerEvent ={pointerEvent}/>
+      <Deck onClick ={updateColor} color ={color} history = {history}/>
     </div>
   )
 }

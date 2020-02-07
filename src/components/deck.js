@@ -4,13 +4,10 @@ import Card from "./card.js"
 import icons from "./icons.module.css"
 import { checkPropTypes } from "prop-types"
 
-const Deck = (props) => {
-
-  const handleClick = (pointerEvents) => {
-    props.onClick(pointerEvents)
-  }
+console.log("ok")
 
 
+const Deck = ({onClick, color, history}) => {
 
   const createDeck = () => {
     const deck = []
@@ -20,18 +17,21 @@ const Deck = (props) => {
       const card = (
         <Card
           key={property}
-          onClick={() => handleClick(props.style)}
+          id = {property}
+          onClick={() => onClick([{backgroundColor: "black"}, property])}
           className={icons[property]}
-          style ={props.style}
-        />
+          history ={history}    
+          color = {color}    />
       )
 
       const duplicate = (
         <Card
           key={`${property}-duplicate`}
-          onClick={() => handleClick(props.style)}
+          onClick={() => onClick([{backgroundColor: "black"}, property])}
           className={icons[property]}
-          style ={props.style}
+          history ={history}
+          id ={`${property}-duplicate`}
+          color = {color}
         />
       )
 
@@ -54,7 +54,10 @@ const Deck = (props) => {
   const shuffled = shuffle(createDeck())
   const [deck, shuffleDeck] = useState(shuffled)
 
-  return <div>{deck}</div>
-}
+return (<div>{shuffled.map((component, index) => (
+  <React.Fragment key={index}>
+      { component }
+</React.Fragment>))}</div>
+)}
 
 export default Deck
