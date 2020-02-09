@@ -3,17 +3,49 @@
 --border-color: rgb(174, 171, 177);
 
 }
-.card {
-    background-color: var(--main-color);
-    color: white;
-    border: .25rem solid var(--border-color);
-    border-radius: .2rem;
+
+.scene{
+    
     width: 5rem;
     height: 8rem;
+    perspective: 600px;
+
+}
+.card {
+    border: .1rem solid var(--border-color);
+    border-radius: .2rem;
+    
+    width: 100%;
+    height: 100%;
     margin-bottom: 1rem;
+    position: relative;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+
+}
+
+.cardFace{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    /* backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; */
+
+}
+
+.cardFaceFront{
+    background-color: var(--main-color);
+}
+
+.cardFaceBack {
     display: flex;
     align-items: center;
     justify-content: center;
-    pointer-events: auto;
+    transform: rotateY(180deg); 
+    background-color: var(--main-color)
 
+  }
+
+.card.flip{
+    transform: rotateY(180deg);
 }
