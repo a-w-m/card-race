@@ -47,37 +47,54 @@ const Deck = () => {
   })
 
   const [history, setHistory] = useState([])
-  
+  const [matches, setMatches] = useState([])
 
-  const updateHistory = id => {
-    setHistory(history => history.concat(id))  
-    
-
+  const updateHistory = card => {
+    setHistory(history => history.concat(card.class))
   }
 
   useEffect(() => {
     console.log(history)
 
-    if (history.length >= 2) {
-      if (
-        history.length % 2 === 0 &&
-        history[history.length - 1] === history[history.length - 2]
-      ) {
+    if (history.length == 2) {
+      if (history[0] === history[1]) {
         alert("match")
-        setHistory([])
+        setMatches(matches => matches.concat(history))
+        setHistory(
+          history => history.filter(card => matches.includes(card)) === false
+        )
       }
-     
-  }}, [history])
+    }
+    else{
+      setHistory(history => history.filter(card => matches.includes(card)) === true
+      )
+    }
+  }, [history])
 
   return (
-    <div className = {deckStyle.deckContainer}>
+    <div className={deckStyle.deckContainer}>
       {deck.map(position => {
-        console.log(position.property, position.id)
-        return (
-         
-            <Card  key={position.id} id={position.property} className={icons[position.property]} onClick ={updateHistory} history ={history}/>
-       
-        )
+        if (matches.includes(position.id)) {
+          return (
+            <Card
+              key={position.id}
+              id={position.id}
+              className={icons[position.property]}
+              onClick={updateHistory}
+              style = {{ transform: "rotateY(180deg)"}}
+            />
+          )
+        } else {
+          return (
+            <Card
+              key={position.id}
+              id={position.id}
+              className={icons[position.property]}
+              onClick={updateHistory}
+              style = {{ transform: "rotateY(0)"}}
+            />
+          )
+        }
       })}
     </div>
   )

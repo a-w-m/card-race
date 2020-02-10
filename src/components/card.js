@@ -11,8 +11,8 @@ const Card = props => {
   const [flip, setFlip] = useState({})
 
 
-  const handleClick = useCallback(() => {    
- onClick(className)
+  const handleClick = useCallback((card) => {    
+ onClick(card)
  setFlip({ transform: "rotateY(180deg)"})
 }, [])
 
@@ -21,7 +21,7 @@ const Card = props => {
   
 
   return (
-    <div className = {styles.scene} onClick ={handleClick} >
+    <div className = {styles.scene} onClick ={()=>handleClick({"class":className, id: id })} >
     <div className = {styles.card} style = {flip}>
     <div id = {id} className = {`${styles.cardFace} ${styles.cardFaceFront}`} ></div>
     <div className = {`${styles.cardFace} ${styles.cardFaceBack}`}>
