@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 
 import Card from "./card.js"
 import icons from "./icons.module.css"
 import deckStyle from "./deck.module.css"
+
+let history = []
+let matches = []
+let flip = {}
 
 const shuffle = arr => {
   let copy = [...arr]
@@ -15,16 +19,7 @@ const shuffle = arr => {
   return copy
 }
 
-// let initial= [];
-// let id = 0;
 
-//   for (const property in icons) {
-
-//     initial.push({property: property, id: id}, {property: property, id: id +1})
-
-//     id += 2;
-//     console.log(initial)
-//   }
 
 const createDeck = () => {
   let initial = []
@@ -46,42 +41,73 @@ const Deck = () => {
     return shuffle(createDeck())
   })
 
-  const [history, setHistory] = useState([])
   const [matches, setMatches] = useState([])
+  const [wrongGuess, setGuess] = useState(false)
+  // const [flip, setFlip] = useState({})
+  const [currentCard, setCurrentCard] = useState([" ", " "])
+ 
+  const updateHistory = (card) => {
+    history.push(card.class)
 
-  const updateHistory = card => {
-    setHistory(history => history.concat(card.class))
-  }
+    setCurrentCard(currentCard.concat(card.id))
 
-  useEffect(() => {
-    console.log(history)
+    flip = { transform: "rotateY(180deg)" }
 
-    if (history.length == 2) {
-      if (history[0] === history[1]) {
-        alert("match")
-        setMatches(matches => matches.concat(history))
-        setHistory(
-          history => history.filter(card => matches.includes(card)) === false
-        )
+    setGuess(false)
+    if (history.length % 2 === 0 && history.length >= 2) {
+      if (history[history.length - 1] === history[history.length - 2]) {
+        setMatches(matches.concat(history[history.length - 1]))
+        history = []
+        setGuess(false)
+      } else if (history[history.length - 1] !== history[history.length - 2]) {
+        history = []
+        setGuess(true)
+        
       }
     }
-    else{
-      setHistory(history => history.filter(card => matches.includes(card)) === true
-      )
-    }
-  }, [history])
+  }
+
+useEffect(()=>{
+  
+  if(currentCard.length%2 ==0 && wrongGuess){
+    flip = {width: "100rem"}
+
+}
+
+},[currentCard, wrongGuess])
+
+ 
 
   return (
     <div className={deckStyle.deckContainer}>
       {deck.map(position => {
-        if (matches.includes(position.id)) {
+        if (matches.includes(icons[position.property])) {
           return (
             <Card
               key={position.id}
               id={position.id}
               className={icons[position.property]}
               onClick={updateHistory}
-              style = {{ transform: "rotateY(180deg)"}}
+              style={{ transform: "rotateY(180deg)" }}
+            />
+          )
+        }
+    
+        else if (
+          (currentCard.length % 2 === 0 &&
+            (currentCard[currentCard.length - 1] === position.id ||
+              currentCard[currentCard.length - 2] === position.id)) ||
+          (currentCard.length % 2 === 1 &&
+            currentCard[currentCard.length - 1] === position.id)
+        ) {
+
+          return (
+            <Card
+              key={position.id}
+              id={position.id}
+              className={icons[position.property]}
+              onClick={updateHistory}
+              style={flip}
             />
           )
         } else {
@@ -91,7 +117,7 @@ const Deck = () => {
               id={position.id}
               className={icons[position.property]}
               onClick={updateHistory}
-              style = {{ transform: "rotateY(0)"}}
+              style={{ transform: "" }}
             />
           )
         }
