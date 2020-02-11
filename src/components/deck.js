@@ -5,7 +5,6 @@ import icons from "./icons.module.css"
 import deckStyle from "./deck.module.css"
 
 let history = []
-let matches = []
 let flip = {}
 
 const shuffle = arr => {
@@ -18,8 +17,6 @@ const shuffle = arr => {
   }
   return copy
 }
-
-
 
 const createDeck = () => {
   let initial = []
@@ -36,47 +33,56 @@ const createDeck = () => {
   return initial
 }
 
+const cardsChosen = [
+  {
+    class: "",
+    id: "",
+  },
+  { class: "", id: "" },
+]
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "NEW_CARD":
+      return [...state, { class: action.class, id: action.id }]
+  }
+}
+
 const Deck = () => {
+  const [matches, setMatches] = useState([])
+  // const [flip, setFlip] = useState({})
   const [deck, shuffleDeck] = useState(() => {
     return shuffle(createDeck())
   })
 
-  const [matches, setMatches] = useState([])
-  const [wrongGuess, setGuess] = useState(false)
-  // const [flip, setFlip] = useState({})
-  const [currentCard, setCurrentCard] = useState([" ", " "])
- 
-  const updateHistory = (card) => {
-    history.push(card.class)
+  const [currentCards, dispatch] = React.useReducer((state, action) => {
+    switch (action.type) {
+      case "ADD_CARD":
+        
+        return state[0].class === "" ? [{ class: action.class, id: action.id }] :[...state, {class: action.class, id: action.id} ] 
+    }
+  }, [ {
+    class: "",
+    id: "",
+  }])
 
-    setCurrentCard(currentCard.concat(card.id))
+
+  const updateHistory = card => {
+    history.push(card.class)
+    dispatch({...card, type: "ADD_CARD"})
+    
 
     flip = { transform: "rotateY(180deg)" }
-
-    setGuess(false)
-    if (history.length % 2 === 0 && history.length >= 2) {
-      if (history[history.length - 1] === history[history.length - 2]) {
-        setMatches(matches.concat(history[history.length - 1]))
-        history = []
-        setGuess(false)
-      } else if (history[history.length - 1] !== history[history.length - 2]) {
-        history = []
-        setGuess(true)
-        
-      }
-    }
   }
 
-useEffect(()=>{
-  
-  if(currentCard.length%2 ==0 && wrongGuess){
-    flip = {width: "100rem"}
+  // useEffect(()=>{
 
-}
+  //   if(currentCard.length%2 ==0 && wrongGuess){
+  //     flip = {width: "100rem"}
 
-},[currentCard, wrongGuess])
+  // }
 
- 
+  // },[currentCard, wrongGuess])
 
   return (
     <div className={deckStyle.deckContainer}>
@@ -91,16 +97,10 @@ useEffect(()=>{
               style={{ transform: "rotateY(180deg)" }}
             />
           )
-        }
-    
-        else if (
-          (currentCard.length % 2 === 0 &&
-            (currentCard[currentCard.length - 1] === position.id ||
-              currentCard[currentCard.length - 2] === position.id)) ||
-          (currentCard.length % 2 === 1 &&
-            currentCard[currentCard.length - 1] === position.id)
+        } else if (
+          currentCards[0].id === position.id ||
+          currentCards[0].id === position.id
         ) {
-
           return (
             <Card
               key={position.id}

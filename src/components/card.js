@@ -8,7 +8,7 @@ const Card = props => {
     
   const {className, id, onClick, style} = props;
  
-  const [flip, setFlip] = useState({})
+ 
 
 
   const handleClick = useCallback((card) => {    
@@ -21,7 +21,7 @@ const Card = props => {
   
 
   return (
-    <div className = {styles.scene} onClick ={()=>handleClick({"class":className, id: id })} >
+    <div className = {styles.scene} onClick ={()=>handleClick({"class":className, id: id})} >
     <div className = {styles.card} style = {style}>
     <div id = {id} className = {`${styles.cardFace} ${styles.cardFaceFront}`} ></div>
     <div className = {`${styles.cardFace} ${styles.cardFaceBack}`}>
