@@ -33,21 +33,6 @@ const createDeck = () => {
   return initial
 }
 
-const cardsChosen = [
-  {
-    class: "",
-    id: "",
-  },
-  { class: "", id: "" },
-]
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "NEW_CARD":
-      return [...state, { class: action.class, id: action.id }]
-  }
-}
-
 const Deck = () => {
   const [matches, setMatches] = useState([])
   // const [flip, setFlip] = useState({})
@@ -55,34 +40,35 @@ const Deck = () => {
     return shuffle(createDeck())
   })
 
-  const [currentCards, dispatch] = React.useReducer((state, action) => {
-    switch (action.type) {
-      case "ADD_CARD":
-        
-        return state[0].class === "" ? [{ class: action.class, id: action.id }] :[...state, {class: action.class, id: action.id} ] 
-    }
-  }, [ {
-    class: "",
-    id: "",
-  }])
-
+  const [currentCards, dispatch] = React.useReducer(
+    (state, action) => {
+      switch (action.type) {
+        case "ADD_CARD":
+          if (state[0].class === "" ||state.length >= 2) {
+            return [{ class: action.class, id: action.id }]
+          } else if (state.length < 2) {
+            return [...state, { class: action.class, id: action.id }]
+          }
+      }
+    },
+    [
+      {
+        class: "",
+        id: "a",
+      },
+      {
+        class: "",
+        id: "b",
+      },
+    ]
+  )
 
   const updateHistory = card => {
     history.push(card.class)
-    dispatch({...card, type: "ADD_CARD"})
-    
-
+    dispatch({ ...card, type: "ADD_CARD" })
     flip = { transform: "rotateY(180deg)" }
   }
 
-  // useEffect(()=>{
-
-  //   if(currentCard.length%2 ==0 && wrongGuess){
-  //     flip = {width: "100rem"}
-
-  // }
-
-  // },[currentCard, wrongGuess])
 
   return (
     <div className={deckStyle.deckContainer}>
