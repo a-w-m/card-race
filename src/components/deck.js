@@ -29,14 +29,14 @@ const createDeck = () => {
     let card = <Card
     key={id}
     id={id}
-    className= {property}
+    className= {icons[property]}
     
   />
 
   let duplicate = <Card
   key={id+ 1}
   id={id + 1}
-  className= {property}
+  className= {icons[property]}
 
 />
 
@@ -98,7 +98,7 @@ const Deck = () => {
     }
   }, [currentCards])
 
-  const onClick = () => handleClick()
+ 
 
   return (
     <div className={deckStyle.deckContainer}>
@@ -106,7 +106,7 @@ const Deck = () => {
     {deck.map(card => {
 
           return (
-            React.cloneElement(card, {onClick})
+            React.cloneElement(card, {handleClick})
           )
       
       })}

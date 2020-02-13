@@ -3,18 +3,18 @@ import Icon from "./icon.js"
 import styles from "./card.module.css"
 
 const Card = props => {
-  const { className, id, onClick,} = props
+  const { className, id, handleClick,} = props
 
-  const handleClick = card => {
-    onClick(card)
+  const handleClickCard = card => {
+    handleClick(card)
   }
 
   return (
     <div
       className={styles.scene}
-      onClick={() => handleClick({class: className, id: id })}
+      onClick={() => handleClickCard({class: className, id: id })}
     >
-      <div className={styles.card} style={{}}>
+      <div className={styles.card} style={{transform: "rotateY(180deg)"}}>
         <div
           id={id}
           className={`${styles.cardFace} ${styles.cardFaceFront}`}
