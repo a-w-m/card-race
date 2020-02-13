@@ -1,10 +1,10 @@
 import React from "react"
 
 const Icon = props =>{
-    const {className} = props;
+    const {className, ref} = props;
 
     return(
-        <div className = {className}></div>
+        <div className = {className} ref = {ref}></div>
     )
 
 }

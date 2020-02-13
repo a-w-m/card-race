@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useRef } from "react"
 
 import Card from "./card.js"
 import icons from "./icons.module.css"
 import deckStyle from "./deck.module.css"
+import Icon from "./icon.js"
 
 let history = []
 let matches = []
@@ -37,6 +38,10 @@ const createDeck = () => {
 }
 
 const Deck = () => {
+
+  
+
+  let flip2 =useRef();
   const [deck, shuffleDeck] = useState(() => {
     return shuffle(createDeck())
   })
@@ -66,20 +71,22 @@ const Deck = () => {
       }
     }
   }
+  let flip1 = useRef();
+React.useEffect(()=>{
 
-useEffect(()=>{
   
-  if(currentCard.length%2 ==0 && wrongGuess){
-    flip = {width: "100rem"}
+flip1.current.style.width ="20rem"
 
-}
 
-},[currentCard, wrongGuess])
+}, [matches])
+
 
  
 
   return (
+ 
     <div className={deckStyle.deckContainer}>
+       <Icon className = {"icons-module--three--3eKer"} style = {{width: "5rem"}} ref = {flip1}/>
       {deck.map(position => {
         if (matches.includes(icons[position.property])) {
           return (
@@ -96,10 +103,21 @@ useEffect(()=>{
         else if (
           (currentCard.length % 2 === 0 &&
             (currentCard[currentCard.length - 1] === position.id ||
-              currentCard[currentCard.length - 2] === position.id)) ||
-          (currentCard.length % 2 === 1 &&
-            currentCard[currentCard.length - 1] === position.id)
-        ) {
+              currentCard[currentCard.length - 2] === position.id)) ) {
+
+                  
+          return (
+            <Card
+              key={position.id}
+              id={position.id}
+              className={icons[position.property]}
+              onClick={updateHistory}
+              style={flip}
+               />
+          )
+
+               }else if ((currentCard.length % 2 === 1 &&
+            currentCard[currentCard.length - 1] === position.id)) {
 
           return (
             <Card
@@ -108,7 +126,7 @@ useEffect(()=>{
               className={icons[position.property]}
               onClick={updateHistory}
               style={flip}
-            />
+               />
           )
         } else {
           return (

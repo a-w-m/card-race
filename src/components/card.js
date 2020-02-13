@@ -6,7 +6,7 @@ import styles from "./card.module.css"
 const Card = props => {
 
     
-  const {className, id, onClick, style} = props;
+  const {className, id, onClick, style, ref} = props;
  
   const [flip, setFlip] = useState({})
 
@@ -22,7 +22,7 @@ const Card = props => {
 
   return (
     <div className = {styles.scene} onClick ={()=>handleClick({"class":className, id: id })} >
-    <div className = {styles.card} style = {style}>
+    <div className = {styles.card} style = {style} ref ={ref}>
     <div id = {id} className = {`${styles.cardFace} ${styles.cardFaceFront}`} ></div>
     <div className = {`${styles.cardFace} ${styles.cardFaceBack}`}>
         <Icon className ={className}></Icon>
