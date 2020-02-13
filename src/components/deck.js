@@ -26,10 +26,23 @@ const createDeck = () => {
   let id = 0
 
   for (const property in icons) {
-    initial.push(
-      { property: property, id: id },
-      { property: property, id: id + 1 }
-    )
+    let card = <Card
+    key={id}
+    id={id}
+    className= {property}
+    
+  />
+
+  let duplicate = <Card
+  key={id+ 1}
+  id={id + 1}
+  className= {property}
+
+/>
+
+
+
+    initial.push(card, duplicate)
     id += 2
   }
 
@@ -38,7 +51,6 @@ const createDeck = () => {
 
 const Deck = () => {
   const [matches, setMatches] = useState([])
-  // const [flip, setFlip] = useState({})
   const [deck, shuffleDeck] = useState(() => {
     return shuffle(createDeck())
   })
@@ -70,9 +82,6 @@ const Deck = () => {
     updateHistory(card.class)
     dispatch({ ...card, type: "ADD_CARD" })
 
-    currentCards.length ==1 ? flip = { transform: "rotateY(0deg)" } : flip2 ={transform: "rotateY(180deg)" }
-
-
   }
 
   useEffect(() => {
@@ -89,57 +98,20 @@ const Deck = () => {
     }
   }, [currentCards])
 
+  const onClick = () => handleClick()
+
   return (
     <div className={deckStyle.deckContainer}>
-      {deck.map(position => {
-        if (matches.includes(icons[position.property])) {
+      
+    {deck.map(card => {
+
           return (
-            <Card
-              key={position.id}
-              id={position.id}
-              className={icons[position.property]}
-              onClick={handleClick}
-              style={{ transform: "rotateY(180deg)" }}
-            />
+            React.cloneElement(card, {onClick})
           )
-        } else if (history.length % 2 ==1 && currentCards[0].id === position.id){
-        
-        return (
-            <Card
-              key={position.id}
-              id={position.id}
-              className={icons[position.property]}
-              onClick={handleClick}
-              style={flip}
-            />
-          )}
-        
-        else if (history.length % 2 ==0 && currentCards[1].id === position.id)
-         {
-          return (
-            <Card
-              key={position.id}
-              id={position.id}
-              className={icons[position.property]}
-              onClick={handleClick}
-              style={flip2}
-            />
-          )
-          
-        } else {
-          return (
-            <Card
-              key={position.id}
-              id={position.id}
-              className={icons[position.property]}
-              onClick={handleClick}
-              style={{ transform: "" }}
-            />
-          )
-        }
+      
       })}
     </div>
-  )
-}
+  )}
+
 
 export default Deck
