@@ -6,6 +6,9 @@ import deckStyle from "./deck.module.css"
 
 let history = []
 let flip = {}
+let flip2 ={}
+
+const updateHistory = card => history.push(card)
 
 const shuffle = arr => {
   let copy = [...arr]
@@ -44,7 +47,7 @@ const Deck = () => {
     (state, action) => {
       switch (action.type) {
         case "ADD_CARD":
-          if (state[0].class === "" ||state.length >= 2) {
+          if (state[0].class === "" || state.length >= 2) {
             return [{ class: action.class, id: action.id }]
           } else if (state.length < 2) {
             return [...state, { class: action.class, id: action.id }]
@@ -63,12 +66,28 @@ const Deck = () => {
     ]
   )
 
-  const updateHistory = card => {
-    history.push(card.class)
+  const handleClick = card => {
+    updateHistory(card.class)
     dispatch({ ...card, type: "ADD_CARD" })
-    flip = { transform: "rotateY(180deg)" }
+
+    currentCards.length ==1 ? flip = { transform: "rotateY(0deg)" } : flip2 ={transform: "rotateY(180deg)" }
+
+
   }
 
+  useEffect(() => {
+    if (
+      currentCards.length === 2 &&
+      currentCards[0].class !== currentCards[1].class
+    ) {
+      flip = { transform: "rotateY(0deg)" }
+    } else if (
+      currentCards.length == 2 &&
+      currentCards[0].class === currentCards[1].class
+    ) {
+      setMatches(prev => prev.concat(currentCards[0].class))
+    }
+  }, [currentCards])
 
   return (
     <div className={deckStyle.deckContainer}>
@@ -79,30 +98,41 @@ const Deck = () => {
               key={position.id}
               id={position.id}
               className={icons[position.property]}
-              onClick={updateHistory}
+              onClick={handleClick}
               style={{ transform: "rotateY(180deg)" }}
             />
           )
-        } else if (
-          currentCards[0].id === position.id ||
-          currentCards[0].id === position.id
-        ) {
+        } else if (history.length % 2 ==1 && currentCards[0].id === position.id){
+        
+        return (
+            <Card
+              key={position.id}
+              id={position.id}
+              className={icons[position.property]}
+              onClick={handleClick}
+              style={flip}
+            />
+          )}
+        
+        else if (history.length % 2 ==0 && currentCards[1].id === position.id)
+         {
           return (
             <Card
               key={position.id}
               id={position.id}
               className={icons[position.property]}
-              onClick={updateHistory}
-              style={flip}
+              onClick={handleClick}
+              style={flip2}
             />
           )
+          
         } else {
           return (
             <Card
               key={position.id}
               id={position.id}
               className={icons[position.property]}
-              onClick={updateHistory}
+              onClick={handleClick}
               style={{ transform: "" }}
             />
           )
