@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect} from "react"
 
 import Card from "./card.js"
 import icons from "./icons.module.css"
@@ -6,8 +6,20 @@ import deckStyle from "./deck.module.css"
 import Icon from "./icon.js"
 
 let history = []
-let matches = []
-let flip = {}
+let flipToFace = { transform: "rotateY(180deg)" }
+let flipToBack = { transform: "rotateY(0deg)" }
+let currentCardsDefault =   [
+  {
+    class: "",
+    id: "a",
+  },
+  {
+    class: "",
+    id: "b",
+  },
+]
+
+const updateHistory = card => history.push(card)
 
 const shuffle = arr => {
   let copy = [...arr]
@@ -20,17 +32,18 @@ const shuffle = arr => {
   return copy
 }
 
-
-
 const createDeck = () => {
   let initial = []
   let id = 0
 
   for (const property in icons) {
-    initial.push(
-      { property: property, id: id },
-      { property: property, id: id + 1 }
+    let card = <Card key={id} id={id} className={icons[property]} />
+
+    let duplicate = (
+      <Card key={id + 1} id={id + 1} className={icons[property]} />
     )
+
+    initial.push(card, duplicate)
     id += 2
   }
 
@@ -38,106 +51,69 @@ const createDeck = () => {
 }
 
 const Deck = () => {
-
-  
-
-  let flip2 =useRef();
+  const [matches, setMatches] = useState([])
   const [deck, shuffleDeck] = useState(() => {
     return shuffle(createDeck())
   })
+  const [style, setStyle] = useState(flipToBack)
 
-  const [matches, setMatches] = useState([])
-  const [wrongGuess, setGuess] = useState(false)
-  // const [flip, setFlip] = useState({})
-  const [currentCard, setCurrentCard] = useState([" ", " "])
- 
-  const updateHistory = (card) => {
-    history.push(card.class)
-
-    setCurrentCard(currentCard.concat(card.id))
-
-    flip = { transform: "rotateY(180deg)" }
-
-    setGuess(false)
-    if (history.length % 2 === 0 && history.length >= 2) {
-      if (history[history.length - 1] === history[history.length - 2]) {
-        setMatches(matches.concat(history[history.length - 1]))
-        history = []
-        setGuess(false)
-      } else if (history[history.length - 1] !== history[history.length - 2]) {
-        history = []
-        setGuess(true)
-        
+  const [currentCards, dispatch] = React.useReducer(
+    (state, action) => {
+      switch (action.type) {
+        case "ADD_CARD":
+          if (state[0].class === "" || state.length >= 2) {
+            return [{ class: action.class, id: action.id }]
+          } else if (state.length < 2) {
+            return [...state, { class: action.class, id: action.id }]
+          }
+          case "REMOVE_CARDS":
+            {
+              return currentCardsDefault
+            }
       }
-    }
+    },
+    
+     currentCardsDefault
+    
+  )
+
+  const handleClick = card => {
+    updateHistory(card.class)
+    dispatch({ ...card, type: "ADD_CARD" })
   }
-  let flip1 = useRef();
-React.useEffect(()=>{
 
-  
-flip1.current.style.width ="20rem"
-
-
-}, [matches])
-
-
+  useEffect(() => {
+    if (
+      currentCards.length === 2 &&
+      currentCards[0].class !== currentCards[1].class
+    ) {
+      
+      setTimeout( () => dispatch({type: "REMOVE_CARDS" }), 2000)
  
+    } else if (
+      currentCards.length === 2 &&
+      currentCards[0].class === currentCards[1].class
+    ) {
+      setMatches(prev => prev.concat(currentCards[0].class))
+    }
+  }, [currentCards])
 
   return (
  
     <div className={deckStyle.deckContainer}>
-       <Icon className = {"icons-module--three--3eKer"} style = {{width: "5rem"}} ref = {flip1}/>
-      {deck.map(position => {
-        if (matches.includes(icons[position.property])) {
-          return (
-            <Card
-              key={position.id}
-              id={position.id}
-              className={icons[position.property]}
-              onClick={updateHistory}
-              style={{ transform: "rotateY(180deg)" }}
-            />
-          )
-        }
-    
-        else if (
-          (currentCard.length % 2 === 0 &&
-            (currentCard[currentCard.length - 1] === position.id ||
-              currentCard[currentCard.length - 2] === position.id)) ) {
-
-                  
-          return (
-            <Card
-              key={position.id}
-              id={position.id}
-              className={icons[position.property]}
-              onClick={updateHistory}
-              style={flip}
-               />
-          )
-
-               }else if ((currentCard.length % 2 === 1 &&
-            currentCard[currentCard.length - 1] === position.id)) {
-
-          return (
-            <Card
-              key={position.id}
-              id={position.id}
-              className={icons[position.property]}
-              onClick={updateHistory}
-              style={flip}
-               />
-          )
+      {deck.map(card => {
+        if (matches.includes(card.props.className)) {
+          return React.cloneElement(card, { handleClick, style: flipToFace })
+        } else if (
+          currentCards.filter(
+            currentCard =>
+              currentCard.class === card.props.className &&
+              currentCard.id === card.props.id
+          ).length> 0
+        ) {
+          return React.cloneElement(card, { handleClick, style: flipToFace })
         } else {
-          return (
-            <Card
-              key={position.id}
-              id={position.id}
-              className={icons[position.property]}
-              onClick={updateHistory}
-              style={{ transform: "" }}
-            />
-          )
+          return React.cloneElement(card, { handleClick, style: flipToBack })
         }
       })}
     </div>
