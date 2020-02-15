@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React from "react"
 import Icon from "./icon.js"
 import styles from "./card.module.css"
 
 const Card = props => {
-  const { className, id, handleClick,} = props
+  const { className, id, handleClick, style} = props
 
   const handleClickCard = card => {
     handleClick(card)
@@ -14,7 +14,7 @@ const Card = props => {
       className={styles.scene}
       onClick={() => handleClickCard({class: className, id: id })}
     >
-      <div className={styles.card} style={{transform: "rotateY(180deg)"}}>
+      <div className={styles.card} style={style}>
         <div
           id={id}
           className={`${styles.cardFace} ${styles.cardFaceFront}`}
