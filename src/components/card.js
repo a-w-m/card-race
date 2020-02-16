@@ -3,16 +3,18 @@ import Icon from "./icon.js"
 import styles from "./card.module.css"
 
 const Card = props => {
-  const { className, id, handleClick, style} = props
+  const { className, id, handleClick, style, disabled} = props
 
   const handleClickCard = card => {
     handleClick(card)
   }
 
   return (
-    <div
+    <div>
+    <button
       className={styles.scene}
       onClick={() => handleClickCard({class: className, id: id })}
+      disabled = {disabled} 
     >
       <div className={styles.card} style={style}>
         <div
@@ -23,6 +25,7 @@ const Card = props => {
           <Icon className={className}></Icon>
         </div>
       </div>
+    </button>
     </div>
   )
 }
