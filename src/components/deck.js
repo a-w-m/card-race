@@ -55,7 +55,7 @@ const Deck = () => {
   const [deck, shuffleDeck] = useState(() => {
     return shuffle(createDeck())
   })
-  const [style, setStyle] = useState(flipToBack)
+  const [disabled, setDisable] = useState(false)
 
   const [currentCards, dispatch] = React.useReducer(
     (state, action) => {
@@ -77,6 +77,8 @@ const Deck = () => {
     
   )
 
+  
+
   const handleClick = card => {
     updateHistory(card.class)
     dispatch({ ...card, type: "ADD_CARD" })
@@ -88,7 +90,7 @@ const Deck = () => {
       currentCards[0].class !== currentCards[1].class
     ) {
       
-      setTimeout( () => dispatch({type: "REMOVE_CARDS" }), 2000)
+      setTimeout( () => dispatch({type: "REMOVE_CARDS" }), 3000)
  
     } else if (
       currentCards.length === 2 &&
@@ -103,7 +105,7 @@ const Deck = () => {
     <div className={deckStyle.deckContainer}>
       {deck.map(card => {
         if (matches.includes(card.props.className)) {
-          return React.cloneElement(card, { handleClick, style: flipToFace })
+          return React.cloneElement(card, { handleClick, style: flipToFace, disabled: true })
         } else if (
           currentCards.filter(
             currentCard =>
@@ -111,9 +113,12 @@ const Deck = () => {
               currentCard.id === card.props.id
           ).length> 0
         ) {
-          return React.cloneElement(card, { handleClick, style: flipToFace })
-        } else {
-          return React.cloneElement(card, { handleClick, style: flipToBack })
+          return React.cloneElement(card, { handleClick, style: flipToFace, disabled:true })
+        } else if (currentCards.length == 2 && currentCards[0].id !== "a" ) { //Need to find the condition to disable rest of cards (face down cards) when two current cards are chosen can track matches and compare it to a store of previous match
+          return React.cloneElement(card, { handleClick, style: flipToBack, disabled:true})
+        }
+        else{
+          return React.cloneElement(card, { handleClick, style: flipToBack, disabled:false})
         }
       })}
     </div>
