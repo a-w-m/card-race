@@ -1,24 +1,8 @@
-import React, { useState, useEffect} from "react"
+import React, { useState, useEffect, useRef } from "react"
 
 import Card from "./card.js"
 import icons from "./icons.module.css"
 import deckStyle from "./deck.module.css"
-
-let history = []
-let flipToFace = { transform: "rotateY(180deg)" }
-let flipToBack = { transform: "rotateY(0deg)" }
-let currentCardsDefault =   [
-  {
-    class: "",
-    id: "a",
-  },
-  {
-    class: "",
-    id: "b",
-  },
-]
-
-const updateHistory = card => history.push(card)
 
 const shuffle = arr => {
   let copy = [...arr]
@@ -31,16 +15,43 @@ const shuffle = arr => {
   return copy
 }
 
+const flipCardToFace = (deck, card) => {
+  const { id } = card
+  deck.forEach(card => {
+
+    if (card.id === id) {
+        card.style = { transform: "rotateY(180deg)"}
+    }
+  })
+  return deck
+}
+
+const flipCardToBack = (deck, cards) =>{
+  const cardOne = cards[0].id
+  const cardTwo = cards[1].id
+
+  deck.forEach(card => {
+
+    if (card.id === cardOne || card.id === cardTwo) {
+        card.style = { transform: "rotateY(0deg)"}
+    }
+  })
+  return [...deck]
+}
+
+
 const createDeck = () => {
   let initial = []
   let id = 0
 
   for (const property in icons) {
-    let card = <Card key={id} id={id} className={icons[property]} />
+    let card = {
+      id,
+      className: icons[property],
+      style: { transform: "rotateY(0deg)" },
+    }
 
-    let duplicate = (
-      <Card key={id + 1} id={id + 1} className={icons[property]} />
-    )
+    let duplicate = { ...card, id: id + 1 }
 
     initial.push(card, duplicate)
     id += 2
@@ -50,35 +61,18 @@ const createDeck = () => {
 }
 
 const Deck = () => {
-  const [matches, setMatches] = useState([])
-  const [deck, shuffleDeck] = useState(() => {
+  const [deck, setDeck] = useState(() => {
     return shuffle(createDeck())
   })
-  const [style, setStyle] = useState(flipToBack)
-
-  const [currentCards, dispatch] = React.useReducer(
-    (state, action) => {
-      switch (action.type) {
-        case "ADD_CARD":
-          if (state[0].class === "" || state.length >= 2) {
-            return [{ class: action.class, id: action.id }]
-          } else if (state.length < 2) {
-            return [...state, { class: action.class, id: action.id }]
-          }
-          case "REMOVE_CARDS":
-            {
-              return currentCardsDefault
-            }
-      }
-    },
-    
-     currentCardsDefault
-    
-  )
+  const container = useRef(null)
+  const [currentCards, setCurrentCards] = useState([])
+  const [matches, setMatches] = useState([])
 
   const handleClick = card => {
-    updateHistory(card.class)
-    dispatch({ ...card, type: "ADD_CARD" })
+    setDeck(prev => {
+      return flipCardToFace(prev, card)
+    })
+    setCurrentCards(prev => prev.concat(card))
   }
 
   useEffect(() => {
@@ -86,33 +80,45 @@ const Deck = () => {
       currentCards.length === 2 &&
       currentCards[0].class !== currentCards[1].class
     ) {
-      
-      setTimeout( () => dispatch({type: "REMOVE_CARDS" }), 2000)
- 
+      container.current.style.pointerEvents = 'none';
+      setCurrentCards([])
+
+      setTimeout(()=> {
+        
+        setDeck(prev => {
+        return flipCardToBack(prev, currentCards)
+      })
+
+      container.current.style.pointerEvents = 'auto';
+    
+    }, 1500)
     } else if (
       currentCards.length === 2 &&
       currentCards[0].class === currentCards[1].class
     ) {
-      setMatches(prev => prev.concat(currentCards[0].class))
+      setMatches(prev => prev.concat(currentCards))
+      setCurrentCards([])
     }
   }, [currentCards])
 
+  useEffect(()=>{
+    if(matches.length === deck.length){
+      alert("You Win!")
+    }
+  }, [deck, matches])
+
   return (
-    <div className={deckStyle.deckContainer}>
+    <div className={deckStyle.deckContainer} ref = {container}>
       {deck.map(card => {
-        if (matches.includes(card.props.className)) {
-          return React.cloneElement(card, { handleClick, style: flipToFace })
-        } else if (
-          currentCards.filter(
-            currentCard =>
-              currentCard.class === card.props.className &&
-              currentCard.id === card.props.id
-          ).length> 0
-        ) {
-          return React.cloneElement(card, { handleClick, style: flipToFace })
-        } else {
-          return React.cloneElement(card, { handleClick, style: flipToBack })
-        }
+        return (
+          <Card
+            key={card.id}
+            id={card.id}
+            className={card.className}
+            handleClick={handleClick}
+            style={card.style}
+          />
+        )
       })}
     </div>
   )
