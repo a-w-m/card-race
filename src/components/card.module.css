@@ -28,8 +28,8 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    /* backface-visibility: hidden;
-    -webkit-backface-visibility: hidden; */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 
 }
 
@@ -42,10 +42,8 @@
     align-items: center;
     justify-content: center;
     transform: rotateY(180deg); 
-    background-color: var(--main-color)
+    background-color: var(--main-color);
+
+
 
   }
-
-.card.flip{
-    transform: rotateY(180deg);
-}
