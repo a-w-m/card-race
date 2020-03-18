@@ -31,7 +31,9 @@ const Card = props => {
     </div>
 =======
   const handleClickCard = card => {
+    if (style.transform === "rotateY(0deg)"){
     handleClick(card)
+    }
   }
 
   return (
