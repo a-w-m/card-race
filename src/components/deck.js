@@ -104,6 +104,8 @@ const Deck = (props) => {
 
   }, [setDeckSize, deck.length])
 
+  
+
   const handleClick = card => {
     setDeck(prev => {
       return flipCardToFace(prev, card)
