@@ -2,13 +2,11 @@
   --blue: #00f0ff;
   --pink: #ff94a9;
   --yellow: #f9f871;
-  --green: #78C664;
-
+  --green: #78c664;
 }
 
 .one {
   background: conic-gradient(var(--yellow) 50%, var(--blue) 50%);
-  clip-path: polygon(0 100%, 50% 0%, 100% 100%, 0% 50%, 100% 50%);
   width: 60%;
   height: 40%;
 }
@@ -30,26 +28,75 @@
 }
 
 .four {
-  
-    background: linear-gradient(90deg, var(--blue) 50%, var(--blue) 50%) 0 100% /
-          33% 100% no-repeat,
-        linear-gradient(90deg, var(--pink), var(--pink)) 0% 100% / 66% 100% no-repeat, linear-gradient(90deg, var(--yellow), var(--yellow)) bottom right / 99% 100% no-repeat;
-    width: 60%;
-    height: 40%;
-    clip-path: polygon(0 100%, 50% 0%, 100% 100%);
-    transform: rotate(180deg);
+  background-image: linear-gradient(
+    to right,
+    var(--pink),
+    var(--pink) 25%,
+    var(--green) 25%,
+    var(--green) 75%,
+    var(--pink) 75%
+  );
+  width: 60%;
+  height: 40%;
 }
 
-.five{
-
-    background: conic-gradient(var(--yellow) 25%,  var(--blue) 25% 50%, var(--green) 50% 75%,  var(--pink) 75% 100% );
-    width: 60%;
-    height: 40%;
-    
+.five {
+  background: conic-gradient(
+    var(--yellow) 25%,
+    var(--blue) 25% 50%,
+    var(--green) 50% 75%,
+    var(--pink) 75% 100%
+  );
+  width: 60%;
+  height: 40%;
 }
 
-.six{
-    background:conic-gradient(var(--yellow) 25%, var(--blue) 25% 50%, var(--pink) 50% 75%, var(--green) 75%) top left/ 25% 25% repeat;
+.six {
+  background: conic-gradient(
+      var(--yellow) 25%,
+      var(--blue) 25% 50%,
+      var(--pink) 50% 75%,
+      var(--green) 75%
+    )
+    top left/ 25% 25% repeat;
+  width: 60%;
+  height: 40%;
+}
+
+.seven{
+  background-image: linear-gradient(
+    var(--yellow),
+    var(--yellow) 33%,
+    var(--green) 33%,
+    var(--green) 66%,
+    var(--pink) 66%
+
+  );
+
+  width: 60%;
+  height: 40%;
+}
+
+.eight{
+  background-image:  repeating-linear-gradient(
+      45deg,
+      var(--yellow),
+      var(--yellow) 1rem,
+      var(--pink) 1rem,
+      var(--pink) 2rem /* determines size */
+    );
     width: 60%;
     height: 40%;
+}
+
+.nine{
+  background-image:
+  repeating-radial-gradient(
+    circle at 0 0, 
+    var(--blue),
+    var(--green) 50px
+  );
+
+  width: 60%;
+  height: 40%;
 }
