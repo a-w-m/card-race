@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef} from "react"
 import Card from "./card.js"
 import icons from "./icons.module.css"
 import deckStyle from "./deck.module.css"
-import Icon from "./icon.js"
+
 
 
 const shuffle = arr => {

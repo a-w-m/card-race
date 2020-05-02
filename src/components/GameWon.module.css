@@ -1,0 +1,65 @@
+.overlay {
+    position: fixed;
+    display: block; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+    cursor: pointer; /* Add a pointer on hover */
+  
+}
+
+.popout{
+    display: flex;
+    flex-flow: row wrap;
+    border: 0.1rem solid transparent;
+    position: fixed;
+    bottom: 50%;
+    height: auto;
+    width: 40%;
+    z-index: 25;
+    background-color: white;
+    border-radius: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+.form{
+    z-index: 26
+}
+
+button{
+
+user-select: none;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.4rem;
+  position: relative;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  font-size: 10px;
+  font-weight: 600;
+  height: 3.6rem;
+  min-width: 8rem;
+  padding: 0 1.2rem 0.1rem;
+  flex: 0 0 7.5%;
+  transition: all 80ms linear;
+
+}
+
+  button:hover {
+    transform: translateY(0.1rem);
+    font-size: 1.75rem;
+  }
+

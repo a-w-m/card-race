@@ -4,6 +4,7 @@ import React, {useState, useEffect} from "react"
 import Deck from "../components/deck"
 import Matches from "../components/matches"
 import Reset from "../components/reset"
+import GameWon from "../components/GameWon"
 
 // import Layout from "../components/layout"
 // import Image from "../components/image"
@@ -13,12 +14,11 @@ const App = () => {
   const [matches, setMatches] = useState([])
   const [deckSize, setDeckSize] = useState()
   const [reset, setReset] = useState(false)
+  const [isGameWon, setGameWon] = useState(true)
 
   useEffect(() => {
     if (matches.length === deckSize) {
-      setTimeout(() => {
-        alert("You Win!")
-      }, 1000)
+      setGameWon(true)
     }
   }, [matches, deckSize])
 
@@ -28,6 +28,7 @@ const App = () => {
       <Deck setMatches = {setMatches} setDeckSize = {setDeckSize} reset = {reset} setReset = {setReset}/>
       <Matches matches = {matches} deckSize ={deckSize} />
       <Reset setReset = {setReset}/>
+      {isGameWon && <GameWon/>} 
     </div>
   )
 }
