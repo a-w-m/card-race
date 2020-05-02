@@ -28,7 +28,7 @@ const App = () => {
       <Deck setMatches = {setMatches} setDeckSize = {setDeckSize} reset = {reset} setReset = {setReset}/>
       <Matches matches = {matches} deckSize ={deckSize} />
       <Reset setReset = {setReset}/>
-      {isGameWon && <GameWon/>} 
+      {isGameWon && <GameWon setGameWon = {setGameWon} />} 
     </div>
   )
 }

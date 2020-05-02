@@ -1,4 +1,12 @@
-
+:root {
+  --blue: #00f0ff;
+  --pink: #ff94a9;
+  --yellow: #f9f871;
+  --green: #78c664;
+  --main-color: #2C0F5B;
+  --border-color: rgb(174, 171, 177);
+  font-size: 10px;
+}
 
 html {
   font-family: sans-serif;
@@ -625,3 +633,34 @@ pre tt:after {
     font-size: 100%;
   }
 }
+
+button{
+
+  user-select: none;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.4rem;
+  position: relative;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  font-size: 10px;
+  font-weight: 600;
+  min-height: 3.6rem;
+  min-width: 8rem;
+  padding: 0 1.2rem 0.1rem;
+  flex: 0 0 7.5%;
+  transition: all 80ms linear;
+ 
+
+}
+
+  .button:hover {
+    transform: translateY(0.1rem);
+    font-size: 1.15rem;
+  }
