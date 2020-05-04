@@ -5,6 +5,7 @@ import Deck from "../components/deck"
 import Matches from "../components/matches"
 import Reset from "../components/reset"
 import GameWon from "../components/GameWon"
+import Timer from "../components/Timer"
 
 // import Layout from "../components/layout"
 // import Image from "../components/image"
@@ -14,7 +15,9 @@ const App = () => {
   const [matches, setMatches] = useState([])
   const [deckSize, setDeckSize] = useState()
   const [reset, setReset] = useState(false)
-  const [isGameWon, setGameWon] = useState(true)
+  const [startTime, setStartTime] = useState(null)
+  const[timer, setTimer] = useState(0)
+  const [isGameWon, setGameWon] = useState(false)
 
   useEffect(() => {
     if (matches.length === deckSize) {
@@ -25,10 +28,11 @@ const App = () => {
 
   return (
     <div>
-      <Deck setMatches = {setMatches} setDeckSize = {setDeckSize} reset = {reset} setReset = {setReset}/>
+      <Deck setMatches = {setMatches} setDeckSize = {setDeckSize} reset = {reset} setReset = {setReset} startTime = {startTime} setStartTime = {setStartTime}/>
       <Matches matches = {matches} deckSize ={deckSize} />
       <Reset setReset = {setReset}/>
-      {isGameWon && <GameWon setGameWon = {setGameWon} />} 
+      <Timer timer = {timer} setTimer ={setTimer} startTime= {startTime} isGameWon = {isGameWon}></Timer>
+      {isGameWon && <GameWon setGameWon = {setGameWon} time = {timer} />} 
     </div>
   )
 }

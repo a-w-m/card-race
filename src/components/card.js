@@ -6,8 +6,10 @@ const Card = props => {
   const { className, id, handleClick, style} = props
 
   const handleClickCard = card => {
+
     if (style.transform === "rotateY(0deg)"){
     handleClick(card)
+   
     }
   }
 

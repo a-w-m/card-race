@@ -92,7 +92,7 @@ const createDeck = () => {
 }
 
 const Deck = (props) => {
-  const {setMatches, setDeckSize, reset, setReset} = props
+  const {setMatches, setDeckSize, reset, setReset, startTime, setStartTime} = props
   const [deck, setDeck] = useState(() => {
     return shuffle(createDeck())
   })
@@ -107,6 +107,11 @@ const Deck = (props) => {
   
 
   const handleClick = card => {
+
+    if (!startTime){
+      setStartTime(Date.now())
+    }
+
     setDeck(prev => {
       return flipCardToFace(prev, card)
     })
@@ -140,6 +145,8 @@ const Deck = (props) => {
 
   useEffect(()=>{
     if (reset){
+      
+      setStartTime(null)
 
       disableClick(container)
 
@@ -170,11 +177,8 @@ const Deck = (props) => {
 
       }, 1000)
 
-      
 
-
-
-      return clearTimeout
+      //return clearTimeout
     }
   }, [reset, setMatches, setReset, currentCards])
 
@@ -190,6 +194,7 @@ const Deck = (props) => {
             className={card.className}
             handleClick={handleClick}
             style={card.style}
+            setStartTime = {setStartTime}
           />
         )
       })}

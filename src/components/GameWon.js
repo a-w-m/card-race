@@ -4,7 +4,7 @@ import styles from "./GameWon.module.css"
 const GameWon = (props) => {
     return(
         <div>
-            <PopOut time = {'1:00'} setGameWon = {props.setGameWon}/>
+            <PopOut time = {props.time} setGameWon = {props.setGameWon}/>
             <Overlay/>
         </div>
 
@@ -20,7 +20,7 @@ const PopOut = (props) =>{
     return (
         <div className = {styles.popout}>        
         <h1>You Win!</h1>
-        <section>Your time was {props.time}</section>
+        <section>Your time was ${`props.time`}</section>
         <section>Enter your name to submit your time to the leaderboard:</section>
         <TimeForm/>
         <Replay/>
