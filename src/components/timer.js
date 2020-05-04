@@ -19,7 +19,18 @@ const {startTime, timer, setTimer, isGameWon} = props
 
 
         }, 100)
+
+
+        if (isGameWon){
+            clearInterval(id)
+            setTimer(0)
+            console.log("test")
+          
+    
+        }
     } 
+
+
 
         return () =>{
             clearInterval(id)

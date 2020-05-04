@@ -180,7 +180,7 @@ const Deck = (props) => {
 
       //return clearTimeout
     }
-  }, [reset, setMatches, setReset, currentCards])
+  }, [reset, setMatches, setReset, currentCards, setStartTime])
 
   
 

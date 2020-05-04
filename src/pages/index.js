@@ -16,12 +16,15 @@ const App = () => {
   const [deckSize, setDeckSize] = useState()
   const [reset, setReset] = useState(false)
   const [startTime, setStartTime] = useState(null)
+  const[endTime, setEndTime] = useState(0)
   const[timer, setTimer] = useState(0)
   const [isGameWon, setGameWon] = useState(false)
 
   useEffect(() => {
     if (matches.length === deckSize) {
       setGameWon(true)
+      setEndTime ( timer )
+      
     }
   }, [matches, deckSize])
 
@@ -32,7 +35,7 @@ const App = () => {
       <Matches matches = {matches} deckSize ={deckSize} />
       <Reset setReset = {setReset}/>
       <Timer timer = {timer} setTimer ={setTimer} startTime= {startTime} isGameWon = {isGameWon}></Timer>
-      {isGameWon && <GameWon setGameWon = {setGameWon} time = {timer} />} 
+      {isGameWon && <GameWon setGameWon = {setGameWon} endTime = {endTime} />} 
     </div>
   )
 }

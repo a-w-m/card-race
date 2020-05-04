@@ -20,7 +20,7 @@ const PopOut = (props) =>{
     return (
         <div className = {styles.popout}>        
         <h1>You Win!</h1>
-        <section>Your time was ${`props.time`}</section>
+        <section>Your time was {`${props.endTime}`}</section>
         <section>Enter your name to submit your time to the leaderboard:</section>
         <TimeForm/>
         <Replay/>
