@@ -1,16 +1,15 @@
 import React, {useState, useEffect} from "react"
 
 
-
+let id;
 
 const Timer = (props) => {
 
 const {startTime, timer, setTimer, isGameWon} = props
 
     useEffect(()=>{
-       let id;
 
-       if (startTime){ 
+       if (startTime && (timer=== 0)){ 
         id = setInterval(()=>{
         const currentTime = Date.now()
         setTimer(()=>{
@@ -19,22 +18,9 @@ const {startTime, timer, setTimer, isGameWon} = props
 
 
         }, 100)
-
-
-        if (isGameWon){
-            clearInterval(id)
-            setTimer(0)
-            console.log("test")
-          
-    
-        }
-    } 
-
-
-
+    }
         return () =>{
             clearInterval(id)
-            setTimer(0)
         }
 
 

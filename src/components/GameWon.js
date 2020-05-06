@@ -4,7 +4,7 @@ import styles from "./GameWon.module.css"
 const GameWon = (props) => {
     return(
         <div>
-            <PopOut time = {props.time} setGameWon = {props.setGameWon}/>
+            <PopOut endTime = {props.endTime} setGameWon = {props.setGameWon} setReset = {props.setReset}/>
             <Overlay/>
         </div>
 
@@ -15,15 +15,16 @@ const PopOut = (props) =>{
 
     function handleClick(){
         props.setGameWon(false)
+        props.setReset(true)
     }
 
     return (
         <div className = {styles.popout}>        
         <h1>You Win!</h1>
-        <section>Your time was {`${props.endTime}`}</section>
+        <section>Your time was {`${props.endTime}`} seconds</section>
         <section>Enter your name to submit your time to the leaderboard:</section>
         <TimeForm/>
-        <Replay/>
+        <Replay handleClick = {handleClick}/>
         <section className = {styles.close} onClick = {() => handleClick()} >X</section>
         </div>
     )
@@ -40,9 +41,10 @@ const TimeForm = () =>{
     )
 }
 
-const Replay = () =>{
+const Replay = (props) =>{
+
     return (
-        <button className = {styles.ButtonPlayAgain}>Play Again</button>
+        <button className = {styles.ButtonPlayAgain} onClick = {()=> props.handleClick()}>Play Again</button>
     )
 }
 

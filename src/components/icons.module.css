@@ -11,7 +11,7 @@
   width: 60%;
   height: 40%;
 }
-
+/* 
 .three {
   background: linear-gradient(135deg, var(--blue) 50%, var(--blue) 50%) 0 100% /
       50% 50% no-repeat,
@@ -79,7 +79,7 @@
       var(--yellow) 1rem,
       var(--pink) 1rem,
       var(--pink) 2rem /* determines size */
-    );
+    /* );
     width: 60%;
     height: 40%;
 }
@@ -94,4 +94,4 @@
 
   width: 60%;
   height: 40%;
-}
+} */ 

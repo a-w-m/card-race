@@ -145,8 +145,6 @@ const Deck = (props) => {
 
   useEffect(()=>{
     if (reset){
-      
-      setStartTime(null)
 
       disableClick(container)
 
@@ -177,8 +175,6 @@ const Deck = (props) => {
 
       }, 1000)
 
-
-      //return clearTimeout
     }
   }, [reset, setMatches, setReset, currentCards, setStartTime])
 
