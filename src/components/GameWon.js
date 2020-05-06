@@ -32,10 +32,17 @@ const PopOut = (props) =>{
 
 
 const TimeForm = () =>{
+
+    const [input, setInput] = useState()
+
+    function handleSubmit(){
+
+    }
+
     return (
         <form className = {styles.TimeForm}>
         <label for = "name"></label>
-        <input type = 'text' id = "name" default = "name" placeholder ="enter name"/> 
+        <input type = 'text' id = "name" default = "name" placeholder ="enter name" value = {input} onChange ={(event)=>{setInput(event.target.value)}}/> 
         <button type = 'submit' className = {styles.ButtonSubmitTime}>Submit Time </button>
     </form>
     )
