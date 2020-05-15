@@ -6,8 +6,9 @@ import Matches from "../components/matches"
 import Reset from "../components/reset"
 import GameWon from "../components/GameWon"
 import Timer from "../components/Timer"
+import Scores from "../components/scores"
 
-// import Layout from "../components/layout"
+//import Layout from "../components/layout"
 // import Image from "../components/image"
 // import SEO from "../components/seo"
 
@@ -36,11 +37,13 @@ const App = () => {
 
 
   return (
-    <div>
+    <div className = "gridLayout" >
       <Deck setMatches = {setMatches} setDeckSize = {setDeckSize} reset = {reset} setReset = {setReset} startTime = {startTime} setStartTime = {setStartTime}/>
-      <Matches matches = {matches} deckSize ={deckSize} />
-      <Reset setReset = {setReset}/>
+      <div className = "gameInfoContainer">
       <Timer timer = {timer} setTimer ={setTimer} startTime= {startTime} isGameWon = {isGameWon}></Timer>
+      <Reset setReset = {setReset}/>
+      </div>      
+      <Scores ></Scores>
       {isGameWon && <GameWon setGameWon = {setGameWon} endTime = {timer}  setReset = {setReset}/>} 
     </div>
   )

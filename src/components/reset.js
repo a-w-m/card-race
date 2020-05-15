@@ -1,5 +1,5 @@
 import React from "react"
-
+import resetStyles from "./reset.module.css"
 const Reset = (props) =>{
     const {setReset} = props
 
@@ -9,7 +9,7 @@ const Reset = (props) =>{
     }
 
     return(
-    <button onClick = {()=> handleClick()} >Reset</button>
+    <button className = {resetStyles.resetButton} onClick = {()=> handleClick()} >Reset</button>
     )
 
 }

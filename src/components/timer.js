@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react"
+import styles from "./timer.module.css"
 
 
 let id;
@@ -29,7 +30,7 @@ const {startTime, timer, setTimer, isGameWon} = props
     )
     
     return(
-        <div>{timer} seconds</div>
+        <div className = {styles.timer}>Time: {timer}</div>
     )
 }
 

@@ -649,8 +649,8 @@ button{
   white-space: nowrap;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 400;
   min-height: 3.6rem;
   min-width: 8rem;
   padding: 0 1.2rem 0.1rem;
@@ -663,4 +663,28 @@ button{
   .button:hover {
     transform: translateY(0.1rem);
     font-size: 1.15rem;
+  }
+
+  .gridLayout{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr 10rem;
+    grid-row-gap: 5rem;
+  }
+
+  .gameInfoContainer{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    grid-area: 2/4/2/4;
+  }
+
+  .gridScores{
+    grid-area: 1/7/1/7;
+  }
+
+  .gridScores > ul{
+    font-size: 1.5rem;
   }
