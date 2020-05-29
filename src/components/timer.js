@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React, {useEffect} from "react"
 import styles from "./timer.module.css"
 
 
@@ -10,7 +10,7 @@ const {startTime, timer, setTimer, isGameWon} = props
 
     useEffect(()=>{
 
-       if (startTime && (timer=== 0)){ 
+       if (startTime && !(isGameWon)){ 
         id = setInterval(()=>{
         const currentTime = Date.now()
         setTimer(()=>{
@@ -25,7 +25,7 @@ const {startTime, timer, setTimer, isGameWon} = props
         }
 
 
-}, [startTime, isGameWon]
+}, [startTime, isGameWon, setTimer]
 
     )
     

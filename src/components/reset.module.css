@@ -2,3 +2,12 @@
     background-color: var(--pink);
     width: 50%;
 }
+
+@media (orientation: landscape ) and (max-width: 830px){
+
+    .resetButton{
+    width: 20%;
+
+    }
+}
+

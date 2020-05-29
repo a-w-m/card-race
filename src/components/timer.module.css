@@ -1,3 +1,19 @@
 .timer{
     font-size: 2rem;
 }
+
+@media (max-width: 360px){
+
+    .timer{
+    font-size: 1.5rem;
+    }
+}
+
+/*small-large phones in landscape*/
+@media (orientation: landscape ) and (max-width: 830px){
+
+    .timer{
+        font-size: 1.5rem;
+    }
+
+}

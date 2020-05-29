@@ -1,5 +1,3 @@
-
-
 .one {
   background: conic-gradient(var(--yellow) 50%, var(--blue) 50%);
   width: 60%;
@@ -58,40 +56,38 @@
   height: 40%;
 }
 
-.seven{
+.seven {
   background-image: linear-gradient(
     var(--yellow),
     var(--yellow) 33%,
     var(--green) 33%,
     var(--green) 66%,
     var(--pink) 66%
-
   );
 
   width: 60%;
   height: 40%;
 }
 
-.eight{
-  background-image:  repeating-linear-gradient(
-      45deg,
-      var(--yellow),
-      var(--yellow) 1rem,
-      var(--pink) 1rem,
-      var(--pink) 2rem /* determines size */
-     );
-    width: 60%;
-    height: 40%;
+.eight {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--yellow),
+    var(--yellow) 1rem,
+    var(--pink) 1rem,
+    var(--pink) 2rem /* determines size */
+  );
+  width: 60%;
+  height: 40%;
 }
 
-.nine{
-  background-image:
-  repeating-radial-gradient(
-    circle at 0 0, 
+.nine {
+  background-image: repeating-radial-gradient(
+    circle at 0 0,
     var(--blue),
     var(--green) 50px
   );
 
   width: 60%;
   height: 40%;
-} 
+}

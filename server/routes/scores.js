@@ -1,20 +1,32 @@
-const express = require('express');
-const router = express.Router();
-const Score = require ('../models/score');
+const express = require("express")
+const router = express.Router()
+const { check, validationResult } = require("express-validator")
+const Score = require("../models/score")
 
-router.get('/', (req, res)=>{
-
-    Score.find().then(scores=>{
-
-        res.json(scores)
-    })
+router.get("/", (req, res) => {
+  Score.find().then(scores => {
+    res.json(scores)
+  })
 })
 
+router.post(
+  "/",
+  check("name")
+    .notEmpty()
+    .isLength({ min: 3, max: 9 }),
+  check("time").isInt({ gt: 0 }),
+  (req, res) => {
+    const { name, time } = req.body
+    const newScore = new Score({ name, time })
+    const errors = validationResult(req)
 
-router.post('/', (req, res)=>{
-    const {name, time} = req.body
-    const newScore = new Score({name, time})
+    if (!errors.isEmpty()) {
+      console.log(errors)
+      return res.status(422).json(errors)
+    }
+
     newScore.save()
-    
-})
+    return res.status(200).json("success")
+  }
+)
 module.exports = router

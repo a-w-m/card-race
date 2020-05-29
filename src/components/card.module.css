@@ -7,6 +7,14 @@
     perspective: 600px;
 
 }
+
+.scene:hover, .scene:focus{
+
+  
+    border: .2rem solid var(--blue);
+}
+
+
 .card {
     border: .1rem solid var(--border-color);
     border-radius: .2rem;
@@ -42,4 +50,21 @@
 
 
 
+  }
+
+  @media (max-width: 767px)  {
+
+    .scene{
+       width: 5rem;
+       height: 7.75rem; 
+    }
+    
+  }
+
+  @media (orientation: landscape ) and (max-width: 830px){
+    
+    .scene{
+        width: 5rem;
+        height: 7rem; 
+     }
   }
