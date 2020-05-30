@@ -6,7 +6,7 @@ const Scores = props => {
 
   useEffect(() => {
     async function fetchData() {
-      const result = await axios("http://10.0.0.20:3000/api/scores")
+      const result = await axios("/api/scores")
       setData(
         result.data
           .sort((a, b) => {

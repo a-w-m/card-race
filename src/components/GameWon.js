@@ -64,7 +64,7 @@ const TimeForm = props => {
 
     axios
       .post(
-        "http://localhost:3000/api/scores",
+        "/api/scores",
 
         { name: input, time: props.endTime }
       )
