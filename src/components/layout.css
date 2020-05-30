@@ -669,9 +669,9 @@ button{
 
 }
 
-  .button:hover {
+  button:hover, button:focus {
     transform: translateY(0.1rem);
-    font-size: 1.15rem;
+    border: .1rem solid var(--blue);
   }
 
   .gridLayout{
