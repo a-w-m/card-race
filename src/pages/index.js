@@ -5,7 +5,7 @@ import Deck from "../components/deck"
 import Matches from "../components/matches"
 import Reset from "../components/reset"
 import GameWon from "../components/GameWon"
-import Timer from "../components/Timer"
+import Timer from "../components/timer"
 import Scores from "../components/scores"
 
 //import Layout from "../components/layout"
