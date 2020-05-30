@@ -2,7 +2,7 @@ module.exports = {
   proxy: [
     {
       prefix: "/api",
-      url: "http://localhost:3000",
+      url: "https://card-race.herokuapp.com/",
     },
   ],
 
