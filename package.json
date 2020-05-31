@@ -46,6 +46,5 @@
   },
   "engines": {
     "node": "12.4.x"
-  },
-  "proxy": "https://card-race.herokuapp.com/"
+  }
 }
