@@ -10,7 +10,7 @@ app.use("/api/scores", scoresRouter)
 
 //Serve Static Assets in production
 //set static folder
-    app.use(express.static('public/'))
+    app.use(express.static(__dirname + '/../public/'))
 
     app.get('*', (req, res) => {
       res.sendFile(__dirname +'/../public/index.html');
