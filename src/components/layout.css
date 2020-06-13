@@ -678,26 +678,9 @@ button{
     display: grid;
     width: 100%;
     grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: 1fr 10rem;
-    grid-row-gap: 5rem;
+    grid-template-rows: 1fr 10rem 10rem;
+    padding-top: 2.5rem;
   }
-
-  .gameInfoContainer{
-    display:flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    grid-area: 2/4/2/4;
-  }
-
-  .gridScores{
-    grid-area: 1/7/1/7;
-  }
-
-  .gridScores > ul{
-    font-size: 1.5rem;
-  }
-
 
 
   /*small-large phones in portrait*/
@@ -705,23 +688,10 @@ button{
   @media (max-width: 767px) {
 
     .gridLayout{
-      grid-template-rows:  45% 15% 1fr;
+      grid-template-rows:  45% 15% 15% 1fr;
       grid-row-gap: 1rem;
       height: 100%;
-    }
-
-    .gridScores{
-      grid-area: 3/4/4/5;
-    }
-
-    .gridScores > ul{
-      font-size: 1.25rem;
-      margin-bottom: .5rem;
-    }
-
-    .gameInfoContainer{
-      grid-area: 2/4/3/5;
-      font-size: 1.5rem;
+      padding-top: 1rem;
     }
 
     h1{
@@ -735,26 +705,12 @@ button{
 
   @media (orientation: landscape ) and (max-width: 830px){
     .gridLayout{
-      grid-template-rows:  80% 1fr;
+      grid-template-rows: 60% 1FR 1FR;
       height: 100%;
       grid-gap: 0;
+      grid-template-columns: repeat(9, 1fr);
        }
 
-    .gameInfoContainer{
-      grid-area: 2/1/3/7;
-      font-size: 1.4rem;
-      justify-content: space-around
-    }
-
-    .gridScores{
-      padding-top: 1rem;
-        grid-area: 1/7/1/7;
-      
-    }
-
-    .gridScores > ul{
-      font-size: 1rem;
-    }
 
     button{
       width: 25%;
@@ -763,9 +719,3 @@ button{
   }
     /* extra small phones in portrait*/
 
-    @media (max-width:320px) {
-      .gridScores > ul{
-        font-size: 1rem;
-        margin-bottom: .5rem;
-      }
-    }

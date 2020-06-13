@@ -1,12 +1,16 @@
 const express = require("express")
 const scoresRouter = require("./routes/scores")
+const roomsRouter = require("./routes/room")
 const cors = require("cors")
 const app = express()
+
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 app.use(express.json())
 app.use(cors())
 app.use("/api/scores", scoresRouter)
-
+app.use("/api/room/", roomsRouter)
 
 //Serve Static Assets in production
 //set static folder
@@ -20,4 +24,4 @@ if(process.env.NODE_ENV==='production'){
 }
   
 
-module.exports = app
+module.exports = {app, server, io}

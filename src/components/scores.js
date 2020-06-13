@@ -1,5 +1,6 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
+import styles from "./scores.module.css"
 
 const Scores = props => {
   const [data, setData] = useState([])
@@ -20,13 +21,13 @@ const Scores = props => {
   }, [])
 
   return (
-    <div className="gridScores">
-      <h1>Leaderboard</h1>
+    <div className={styles.gridScores}>
+      <h1>High Scores</h1>
       {data.map((score, index) => {
         return (
           <ul key={score._id}>
-            {" "}
-            {index + 1}. {score.name}-{score.time}
+            <p>{index + 1}. {score.name}</p>
+            <p>{score.time}</p>
           </ul>
         )
       })}

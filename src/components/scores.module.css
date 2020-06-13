@@ -1,0 +1,70 @@
+.gridScores{
+    grid-area: 1/7/1/7;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+
+  .gridScores > ul{
+    font-size: 1.5rem;
+    display: flex;
+    flex-flow: row nowrap;   
+    justify-content: space-between;
+    width: 70%;
+    margin-block-end: 0;
+    margin-left: 0;
+   }
+  
+
+
+  @media (max-width: 767px) {
+
+    .gridScores{
+        grid-area: 5/3/6/6;
+      }
+
+
+  
+      .gridScores > ul{
+        font-size: 1.25rem;
+        display: flex;
+        flex-flow: row nowrap;   
+        justify-content: space-between;
+        width: 70%;
+        margin-block-end: 0;
+        margin-left: 0;
+       }
+       
+       .gridscores > h1{
+           margin-bottom: .5rem;
+           
+       }
+
+  }
+
+
+  @media (orientation: landscape ) and (max-width: 830px){
+
+    .gridScores{
+        padding-top: 1rem;
+          grid-area: 1/8/1/10;
+        
+      }
+  
+      .gridScores > ul{
+        font-size: 1rem;
+      }
+
+  }
+
+  @media (max-width:320px) {
+
+    .gridScores{
+        grid-area: 5/3/6/6;
+    }
+
+    .gridScores > ul{
+      font-size: 1rem;
+      margin-bottom: .5rem;
+    }
+  }

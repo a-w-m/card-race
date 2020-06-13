@@ -16,7 +16,6 @@ const GameWon = props => {
   )
 }
 const PopOut = props => {
-  const closeButton = useRef(null)
 
   function handleClick(e) {
     props.setGameWon(false)
@@ -31,9 +30,7 @@ const PopOut = props => {
     }
   }
 
-  useEffect(() => {
-    closeButton.current.focus()
-  }, [])
+
 
   return (
     <div className={styles.popout}>
@@ -42,15 +39,32 @@ const PopOut = props => {
       <section>Enter your name to submit your time to the leaderboard:</section>
       <TimeForm endTime={props.endTime} setGameWon={props.setGameWon} />
       <Replay handleClick={handleClick} />
-      <div
+     <CloseButton handleClick = {handleClick} handleKeyDown = {handleKeyDown}></CloseButton>
+     </div>
+  )
+}
+
+export const CloseButton = props=>{
+
+  const closeButton = useRef(null)
+
+  useEffect(() => {
+    closeButton.current.focus()
+  }, [])
+
+
+  return(
+    <div>
+    <div
         className={styles.close}
-        onClick={handleClick}
-        onKeyDown={handleKeyDown}
+        onClick={props.handleClick}
+        onKeyDown={props.handleKeyDown}
         ref={closeButton}
         tabIndex="-1"
         role="button"
       />
     </div>
+
   )
 }
 
@@ -116,7 +130,7 @@ const TimeForm = props => {
   )
 }
 
-const Message = props => {
+export const Message = props => {
   return (
     <div className={styles.Message}>
       <span>{props.children}</span>
@@ -134,8 +148,11 @@ const Replay = props => {
   )
 }
 
-const Overlay = () => {
+export const Overlay = () => {
   return <div className={styles.overlay}></div>
 }
 
 export default GameWon
+
+
+

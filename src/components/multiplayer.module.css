@@ -1,0 +1,271 @@
+.dropdownContainer{
+    grid-area: 3/3/4/4;
+    position: relative;
+    align-self: flex-end;
+    justify-self: center;
+
+}
+
+.dropdownContainer:hover .dropdownContent{
+    display: flex;
+
+}
+
+.dropdownButton{
+    background-color: var(--green);
+   
+
+
+}
+
+.dropdownContent{
+
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    background: var(--yellow);
+    width: 110%;
+    border-radius: .4rem;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+
+
+}
+
+
+.dropdownContent > a{
+    color:var(--main-color);
+    font-size: 2rem;
+    padding: 1.2rem .6rem;
+    text-decoration: none;
+
+}
+
+.dropdownContent > a:hover{
+    background-color: var(--border-color)
+
+}
+
+.section{
+    font-size: 2rem;
+}
+
+.ready{
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    align-items: flex-end;
+    height: max-content;
+
+}
+
+.labelContainer{
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+    justify-content: flex-end;
+    line-height: 1.5rem;
+    flex: 45%;
+    align-items: flex-end;
+    margin-bottom: 1rem;
+}
+
+.checkboxContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex: 1 0 50%;
+    align-items: flex-end;
+    margin-bottom: 1rem;
+}
+
+.playerCheckboxContainer{
+    width: 100%;
+    display: flex;
+}
+
+
+.checkboxContainer > input{
+    height: 1.5rem;
+    padding: .5rem; 
+}
+
+
+.submitRoom{
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.submitRoom > input{
+    height: 3rem;
+    font-size: 2rem;
+}
+
+.submitRoom > label{
+    font-size: 2rem;
+    color: var(--pink);
+    text-align: center
+}
+
+.submitRoom > section{
+    font-size: 2rem;
+    color: #ff0034;
+    margin-top: 1rem;
+}
+
+.waiting{
+    font-size: 1.5rem;
+    color: var(--pink);
+    flex-basis: 100%;
+    position: absolute;
+    bottom: 1rem;
+
+}
+.waiting:after {
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: bottom;
+        -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
+        animation: ellipsis steps(4,end) 900ms infinite;
+        content: "\2026"; /* ascii code for the ellipsis character */
+        width: 0px;
+
+}
+      
+      
+      @keyframes ellipsis {
+        to {
+          width: 20px;    
+        }
+      }
+      
+      @-webkit-keyframes ellipsis {
+        to {
+          width: 20px;    
+        }
+      }
+
+.roomId{
+    position: relative;
+    display: inline-block;
+}
+
+.roomId:hover .clipboard{
+    visibility: visible
+
+}
+
+.roomId .clipboard{
+    visibility: hidden;    
+    cursor: pointer;
+    position: absolute;
+    left: 110%;
+    top: -5px;
+    background: var(--yellow);
+    border-radius: .6rem;
+    width: 6rem;
+    z-index: 1000;
+    padding: .5rem 0;
+
+}
+
+.clipboard:after{
+    content: "";
+    position:absolute;
+    border-width: .5rem;
+    border-style: solid;
+    border-color: transparent var(--yellow) transparent transparent;
+    bottom: 40%;
+    right: 100%;
+
+}
+
+.popout + div{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 50%;
+    height: 100%;
+    border: .5rem solid var(--border-color);
+    border-radius: .6rem;
+
+}
+
+
+.lobbyContainer{
+    display: flex;
+    flex-flow: column nowrap;
+    width: 50%;
+    height: 100%;
+    border: .5rem solid var(--border-color);
+    border-radius:.5rem;
+    justify-content: flex-start;
+    align-items: center;
+
+
+}
+
+.lobbyheader{
+    display: flex;
+    flex-flow: column;
+    align-items: center
+}
+
+.note{
+font-size: 1.2rem
+}
+
+.lobbyForm{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    height: 100%;
+}
+
+
+/* sets countdown container dimensions */
+.baseTimer{
+    position: relative;
+    height: 6rem;
+    width: 6rem;
+    margin-top: 1rem;
+}
+
+/* removes Circle styling */
+.baseTimerCircle{
+    fill: none;
+    stroke: none;
+}
+
+/* SVG that displays countdown*/
+
+.baseTimerPathElapsed{
+    stroke-width: .7rem;
+    stroke: grey;
+}
+
+.baseTimerLabel{
+    position: absolute;
+    top: 0;
+    height: 5rem;
+    width: 5rem;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    font-size:4rem;
+}
+
+.baseTimerPathRemaining{
+    stroke-width: .7rem;
+    stroke-linecap: round;
+    transform: rotate(90deg);
+    transform-origin: center;
+    transition: 1s linear all;
+    stroke: var(--pink);
+    stroke-dasharray: 283 283;
+}
+
+.baseTimerSVG{
+    transform:scaleX(-1)
+}

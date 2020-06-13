@@ -94,7 +94,7 @@ const createDeck = () => {
 const Deck = (props) => {
   const {setMatches, setDeckSize, reset, setReset, startTime, setStartTime} = props
   const [deck, setDeck] = useState(() => {
-    return shuffle(createDeck())
+    return (createDeck())
   })
   const [currentCards, setCurrentCards] = useState([])
   const container = useRef(null)
