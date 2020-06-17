@@ -6,8 +6,8 @@ const Player = props =>  {
     const {player} = props
 
     return(
-        <div className = {styles.player}>
-         {player? player: "Player 1"}
+        <div className = {player === 'Player 1' ? styles.playerOne : styles.playerTwo}>
+         {player}
         </div>
     )
 }

@@ -62,7 +62,7 @@
 .labelContainer{
     display: flex;
     flex-direction: column;
-    font-size: 1.5rem;
+    font-size: 2rem;
     justify-content: flex-end;
     line-height: 1.5rem;
     flex: 45%;
@@ -70,13 +70,21 @@
     margin-bottom: 1rem;
 }
 
+.playerOneLabel{
+    color: var(--player-one)
+}
+
+.playerTwoLabel{
+    color:  var(--player-two)
+}
+
 .checkboxContainer{
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     flex: 1 0 50%;
-    align-items: flex-end;
-    margin-bottom: 1rem;
+    align-items: center;
+    margin-bottom: .75rem;
 }
 
 .playerCheckboxContainer{
@@ -86,7 +94,8 @@
 
 
 .checkboxContainer > input{
-    height: 1.5rem;
+    height: 1.8rem;
+    height: 1.8rem;
     padding: .5rem; 
 }
 
@@ -94,6 +103,9 @@
 .submitRoom{
     display: flex;
     flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 1;
 }
 
 .submitRoom > input{
@@ -113,12 +125,15 @@
     margin-top: 1rem;
 }
 
+.submitRoom > button{
+    background-color: var(--green);
+}
+
 .waiting{
     font-size: 1.5rem;
     color: var(--pink);
     flex-basis: 100%;
-    position: absolute;
-    bottom: 1rem;
+    margin-top: 3rem;
 
 }
 .waiting:after {
@@ -209,7 +224,10 @@
 .lobbyheader{
     display: flex;
     flex-flow: column;
-    align-items: center
+    align-items: center;
+    justify-content: space-around;
+    flex: 0 1 35%;
+
 }
 
 .note{
@@ -220,7 +238,9 @@ font-size: 1.2rem
     display: flex;
     flex-flow: column;
     justify-content: space-around;
-    height: 100%;
+    align-items: center;
+    padding: .6rem .4rem;
+    flex: 1 0 35%;
 }
 
 
@@ -229,7 +249,7 @@ font-size: 1.2rem
     position: relative;
     height: 6rem;
     width: 6rem;
-    margin-top: 1rem;
+    align-self:center;
 }
 
 /* removes Circle styling */
@@ -268,4 +288,9 @@ font-size: 1.2rem
 
 .baseTimerSVG{
     transform:scaleX(-1)
+}
+
+.winner{
+    color: #EBFF00;
+    font-size: 2rem;
 }

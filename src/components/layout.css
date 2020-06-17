@@ -5,6 +5,8 @@
   --green: #78c664;
   --main-color: #2C0F5B;
   --border-color: rgb(174, 171, 177);
+  --player-one: #00FFF9;
+  --player-two: #FFC96B;
   --fontSize: 10px;
   font-size: 10px;
 }

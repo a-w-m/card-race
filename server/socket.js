@@ -35,7 +35,6 @@ const socketListener = io.on("connect", socket => {
   })
 
   socket.on("join request", data => {
-    console.log("request", data)
     console.log(io.sockets.adapter.rooms[data])
 
     if (
@@ -61,6 +60,25 @@ const socketListener = io.on("connect", socket => {
   socket.on("multiplayerMatch", ({matches, room}) => {
     if (matches && room.id){
     socket.broadcast.to(room.id).emit("multiplayerMatch", matches)
+    }
+  })
+
+  socket.on('finish', ({player, room})=>{
+    const name = player.name
+    socket.broadcast.to(room.id).emit('finish', name)
+  })
+
+  socket.on("leave lobby", room=>{
+
+    socket.leave(room.id)
+    socket.broadcast.to(room.id).emit('player disconnect')
+  })
+
+  socket.on('disconnecting', ()=>{
+    const room = Object.keys(socket.rooms)[0]
+
+    if (room){
+      socket.broadcast.to(room).emit('player disconnect')
     }
   })
 })

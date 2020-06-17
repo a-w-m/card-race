@@ -2,10 +2,11 @@ import React, {useEffect, useRef, useState, Fragment} from "react"
 import styles from "./matches.module.css"
 
 const Matches = props =>{
-    const {deckSize, matches, isMultiplayer} = props;
+    const {deckSize, matches, isMultiplayer, player, reset, id} = props;
     const container = useRef(null);
     const [widthStyle, setWidthStyle] = useState({});
-
+    const [color, setColor] = useState({})
+ 
     
     useEffect(()=>{
         const containerWidth = container.current.getBoundingClientRect().width
@@ -16,10 +17,28 @@ const Matches = props =>{
 
     
     }, [matches, deckSize])
+
+    useEffect(()=>{
+        if (reset){
+            setWidthStyle({width: 0})
+        }
+    }, [reset])
+
+    useEffect(()=>{
+        if(id === '1'){
+            setColor('playerOneProgressBar')
+
+        }else{
+            setColor('multiplayerProgressBar')
+        }
+
+    })
+
+
     return(
         <Fragment>
         <div className = {isMultiplayer ? `${styles.matches} ${styles.multiplayerMatches}`: styles.matches} ref = {container}>
-        <div className = {styles.progressBar} style = {widthStyle}></div>
+        <div className = { styles.progressBar}   id = {styles[color]} style = {widthStyle}></div>
         </div>
                 <div className = {isMultiplayer? ` ${styles.start} ${styles.multiplayerStart}` : styles.start}>Start</div>
                 <div className = {isMultiplayer? ` ${styles.finish} ${styles.multiplayerFinish}` : styles.finish}>Finish</div>

@@ -1,4 +1,16 @@
-.player{
-    grid-area: 2/2/3/4;
-    font-size: 2rem;
+.playerOne{
+    grid-area: 2/4/3/5;
+    font-size: 1.8rem;
+    text-align: center;
+    height: max-content;
+    font-weight: 600;
+}
+
+.playerTwo{
+    grid-area: 3/4/4/5;
+    font-size: 1.8rem;
+    text-align: center;
+    align-self: flex-end;
+    padding-bottom: .25rem;
+    font-weight: 600;
 }

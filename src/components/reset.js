@@ -9,7 +9,7 @@ const Reset = (props) =>{
     }
 
     return(
-    <button className = {resetStyles.resetButton} onClick = {()=> handleClick()} tabIndex = '0'>Reset</button>
+    <button className = {resetStyles.resetButton}  onClick = {()=> handleClick()} tabIndex = '0'>Reset</button>
     )
 
 }

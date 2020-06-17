@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Fragment } from "react"
 
 // import { Link } from "gatsby"
 
@@ -8,7 +8,7 @@ import Reset from "../components/reset"
 import GameWon from "../components/GameWon"
 import Timer from "../components/timer"
 import Scores from "../components/scores"
-//import Player from "../components/player"
+import Player from "../components/player"
 import Multiplayer from "../components/multiplayer"
 
 //import Layout from "../components/layout"
@@ -46,6 +46,7 @@ const App = () => {
   const [timer, setTimer] = useState(0)
   const [isGameWon, setGameWon] = useState(false)
   const [isMultiplayer, setIsMultiplayer] = useState(false)
+  const [player, setPlayer] = useState({ name: "" })
   const [multiplayerMatches, setMultiplayerMatches] = useState([])
 
 
@@ -59,6 +60,7 @@ const App = () => {
     if (reset) {
       setStartTime(null)
       setTimer(0)
+      setGameWon(false)
     }
   }, [reset])
 
@@ -77,20 +79,25 @@ const App = () => {
         isMultiplayer ={isMultiplayer}
       />
       
-        <Timer
+        {!isMultiplayer && <Timer
           timer={timer}
           setTimer={setTimer}
           startTime={startTime}
           isGameWon={isGameWon}
-        ></Timer>
-        <Reset setReset={setReset} />
+        ></Timer>}
+     {!isMultiplayer && <Reset setReset={setReset} />  }
       <Scores></Scores>
-      {isGameWon && (
+      {(isGameWon && !isMultiplayer)  && (
         <GameWon setGameWon={setGameWon} endTime={timer} setReset={setReset}  isGameWon = {isGameWon}/>
       )}
-      <Matches isMultiplayer = {false} matches = {matches} deckSize ={deckSize}/>
-      <Multiplayer socket = {socket} isMultiplayer = {isMultiplayer} setIsMultiplayer ={setIsMultiplayer} matches ={matches} setMultiplayerMatches = {setMultiplayerMatches}></Multiplayer>
-      {isMultiplayer && <Matches  isMultiplayer ={isMultiplayer} matches = {multiplayerMatches} deckSize = {deckSize}></Matches> }
+      <Matches id = '1' player = {player} isMultiplayer = {false} matches = {player.name === "Player 1" || player.name === "" ? matches: multiplayerMatches} deckSize ={deckSize}  reset = {reset} setReset = {setReset}/>
+      <Multiplayer socket = {socket}  deckSize = {deckSize} isMultiplayer = {isMultiplayer}  setIsMultiplayer ={setIsMultiplayer} player ={player} setPlayer = {setPlayer} matches ={matches}  multiplayerMatches = {multiplayerMatches} setMultiplayerMatches = {setMultiplayerMatches} isGameWon = {isGameWon} setGameWon ={setGameWon} setReset = {setReset} reset ={reset}></Multiplayer>
+      {isMultiplayer && <Fragment>
+      <Matches  id = '2' player = {player} isMultiplayer ={isMultiplayer} matches = {player.name === "Player 2" ? matches : multiplayerMatches} deckSize = {deckSize} reset = {reset}></Matches>
+      <Player player = "Player 1"></Player>
+      <Player player = "Player 2"></Player>
+      </Fragment>
+       }
     </div>
   )
 }

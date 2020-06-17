@@ -20,6 +20,13 @@
     transition: width 1s ease;
 }
 
+#playerOneProgressBar{
+    background-color: var(--player-one)
+}
+
+#multiplayerProgressBar{
+    background-color: var(--player-two)
+}
 .player{
     grid-area: 3/2/4/3
 }
