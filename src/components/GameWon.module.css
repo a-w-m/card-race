@@ -104,20 +104,23 @@
       opacity: 1;
   }
 
-  @media (max-width: 600px) {
-        .popout{
+  @media (max-width: 767px) {
+    .popout{
         width: 90%;
-        }
+        height: 50%;
+        bottom: 45%;
+    }
 
-  }
+}
+
 
   @media (orientation: landscape ) and (max-width: 830px){
 
     .popout{
-    bottom: 25%;
-    width: 70%;
-    height: 65%;
-    top: 2rem;
+        bottom: 25%;
+        width: 60%;
+        height: 90%;
+        top: 2rem;
     }
 
   }
@@ -135,3 +138,4 @@
         width: 40%;
         }
 }
+

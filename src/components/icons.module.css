@@ -4,9 +4,9 @@
   height: 40%;
 }
 
-/* 
 
-.two {
+
+ /* .two {
   background: linear-gradient(45deg, var(--blue) 50%, var(--pink) 50%);
   width: 60%;
   height: 40%;
@@ -77,11 +77,11 @@
     var(--yellow),
     var(--yellow) 1rem,
     var(--pink) 1rem,
-    var(--pink) 2rem /* determines size 
+    var(--pink) 2rem  
   );
   width: 60%;
   height: 40%;
-}
+} 
 
 .nine {
   background-image: repeating-radial-gradient(
@@ -92,5 +92,6 @@
 
   width: 60%;
   height: 40%;
-} 
-*/
+}  */
+
+

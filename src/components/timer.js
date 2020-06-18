@@ -30,7 +30,7 @@ const {startTime, timer, setTimer, isGameWon} = props
     )
     
     return(
-        <div className = {styles.timer}>Time: {timer}</div>
+        <div className = {styles.timer}><span>{timer}</span><span>s</span></div>
     )
 }
 

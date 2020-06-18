@@ -7,6 +7,8 @@
   --border-color: rgb(174, 171, 177);
   --player-one: #00FFF9;
   --player-two: #FFC96B;
+  --winner: #EBFF00;
+  --countdown: #73E65C;
   --fontSize: 10px;
   font-size: 10px;
 }

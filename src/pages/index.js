@@ -79,14 +79,14 @@ const App = () => {
         isMultiplayer ={isMultiplayer}
       />
       
-        {!isMultiplayer && <Timer
+        {(!isMultiplayer && startTime)  &&<Timer
           timer={timer}
           setTimer={setTimer}
           startTime={startTime}
           isGameWon={isGameWon}
         ></Timer>}
      {!isMultiplayer && <Reset setReset={setReset} />  }
-      <Scores></Scores>
+      {!isMultiplayer &&<Scores></Scores>}
       {(isGameWon && !isMultiplayer)  && (
         <GameWon setGameWon={setGameWon} endTime={timer} setReset={setReset}  isGameWon = {isGameWon}/>
       )}

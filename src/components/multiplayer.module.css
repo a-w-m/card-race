@@ -3,6 +3,7 @@
     position: relative;
     align-self: flex-end;
     justify-self: center;
+    width: 100%;
 
 }
 
@@ -13,6 +14,7 @@
 
 .dropdownButton{
     background-color: var(--green);
+    width: 100%;
    
 
 
@@ -282,7 +284,7 @@ font-size: 1.2rem
     transform: rotate(90deg);
     transform-origin: center;
     transition: 1s linear all;
-    stroke: var(--pink);
+    stroke: var(--countdown);
     stroke-dasharray: 283 283;
 }
 
@@ -291,6 +293,74 @@ font-size: 1.2rem
 }
 
 .winner{
-    color: #EBFF00;
-    font-size: 2rem;
+    color: var(--winner);
+    font-size: 2.5rem;
+}
+
+/* small-large phones, portrait*/
+
+@media (max-width: 767px) {
+
+    .lobbyContainer{
+        width: 80%;
+        height: 90%;
+
+    }
+
+    .lobbyheader{
+
+        flex: 0 1 40%;
+    }
+
+    .lobbyheader > h1{
+
+        padding-top: .5rem;
+
+    }
+
+    .winner{
+     font-size: 2.5rem;;
+    }
+
+    .dropdownContainer{
+        width: 90%;
+        justify-self: auto;
+
+    }
+
+
+
+}
+
+/*small-large phones in landscape*/
+
+@media (orientation: landscape) and (max-width: 830px) {
+
+    .dropdownContainer{
+        width: 100%;
+    }
+
+    .dropdownButton{
+    width: 100%
+    }
+
+}
+
+@media (min-height: 375px) and (max-height: 450px) and (orientation: landscape) {
+
+    .lobbyContainer{
+        width: 65%;
+        height: 90%;
+
+    }
+
+}
+
+/* tablets and small screens */
+
+@media (min-width: 768px) and (max-width: 1024px){
+    .lobbyContainer{
+        width: 70%;
+    }
+
 }

@@ -1,6 +1,6 @@
 .resetButton{
     background-color: var(--pink);
-    width: 80%;
+    width: 100%;
     grid-area: 3/5/4/6;
     align-self: flex-end;
     justify-self: center;
@@ -11,7 +11,16 @@
 
     .resetButton{
     width: 20%;
+    margin-top: 3rem;
+    grid-area: 3/7/4/8;
 
     }
 }
+
+/* @media (min-height: 375px) and (max-width: 736px) and (orientation: landscape) {
+
+.resetButton{
+    margin-top: 2.5rem;
+}
+} */
 

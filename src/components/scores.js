@@ -22,7 +22,7 @@ const Scores = props => {
 
   return (
     <div className={styles.gridScores}>
-      <h1>High Scores</h1>
+      <h1>Scoreboard</h1>
       {data.map((score, index) => {
         return (
           <ul key={score._id}>

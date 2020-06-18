@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState, Fragment} from "react"
 import styles from "./matches.module.css"
 
 const Matches = props =>{
-    const {deckSize, matches, isMultiplayer, player, reset, id} = props;
+    const {deckSize, matches, isMultiplayer, reset, id} = props;
     const container = useRef(null);
     const [widthStyle, setWidthStyle] = useState({});
     const [color, setColor] = useState({})
@@ -32,7 +32,7 @@ const Matches = props =>{
             setColor('multiplayerProgressBar')
         }
 
-    })
+    }, [setColor, id])
 
 
     return(

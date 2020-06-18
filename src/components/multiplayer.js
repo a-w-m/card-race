@@ -76,7 +76,7 @@ const Multiplayer = props => {
         })
       }
     })
-  }, [socket, player, setIsMultiplayer])
+  }, [socket, player, setIsMultiplayer, setPlayer])
 
   useEffect(() => {
     socket.emit("multiplayerMatch", { matches, room })
@@ -102,7 +102,6 @@ const Multiplayer = props => {
       setIsLobby(true)
 
       if (winner === null) {
-        console.log("test winner")
         setWinner(player.name)
       }
     }
@@ -245,9 +244,6 @@ const Lobby = props => {
             room={room}
             winner={winner}
           ></LobbyHeader>
-          {/* {whoIsReady.length === 2 && (
-            <CountdownCircle setIsLobby={setIsLobby} setWinner = {setWinner}></CountdownCircle>
-          )} */}
           <LobbyReadyForm
             isLobby={isLobby}
             player={player}
@@ -257,6 +253,7 @@ const Lobby = props => {
             whoIsReady={whoIsReady}
             setWinner ={setWinner}
             setIsLobby ={setIsLobby}
+            winner = {winner}
           />
         </div>
         <CloseButton
@@ -276,10 +273,6 @@ const CountdownCircle = props => {
   function timeFraction(timeElapsed, timeLimit) {
     return timeElapsed / timeLimit
   }
-
-  // function remainingTime(length, fraction) {
-  //   return (length * fraction).toFixed()
-  // }
 
   useEffect(() => {
     let id
@@ -303,7 +296,7 @@ const CountdownCircle = props => {
     return () => {
       clearInterval(id)
     }
-  }, [setIsLobby])
+  }, [setIsLobby, setWinner])
 
   return (
     <div className={styles.baseTimer}>
@@ -371,7 +364,7 @@ const LobbyHeader = props => {
 }
 
 const LobbyReadyForm = props => {
-  const { player, room, socket, setWhoIsReady, whoIsReady, isLobby, setIsLobby, setWinner} = props
+  const { player, room, socket, setWhoIsReady, whoIsReady, isLobby, setIsLobby, setWinner, winner} = props
 
   return (
     <div className={styles.lobbyForm}>
@@ -392,6 +385,7 @@ const LobbyReadyForm = props => {
           id="1"
           room={room}
           socket={socket}
+          winner ={winner}
         ></PlayerCheckbox>
      
           <PlayerCheckbox
@@ -401,6 +395,7 @@ const LobbyReadyForm = props => {
             id="2"
             room={room}
             socket={socket}
+            winner = {winner}
           ></PlayerCheckbox>
           </Fragment> 
         ) 

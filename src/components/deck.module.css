@@ -24,6 +24,6 @@
 @media (orientation: landscape) and (max-width: 830px) {
   .deckContainer {
     padding-top: 1rem;
-    grid-area: 1/1/2/8;
+    grid-area: 1/2/2/9;
   }
 }
