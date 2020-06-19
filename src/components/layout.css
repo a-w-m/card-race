@@ -3,22 +3,21 @@
   --pink: #ff94a9;
   --yellow: #f9f871;
   --green: #78c664;
-  --main-color: #2C0F5B;
+  --main-color: #2c0f5b;
   --border-color: rgb(174, 171, 177);
-  --player-one: #00FFF9;
-  --player-two: #FFC96B;
-  --winner: #EBFF00;
-  --countdown: #73E65C;
+  --player-one: #00fff9;
+  --player-two: #ffc96b;
+  --winner: #ebff00;
+  --countdown: #73e65c;
   --fontSize: 10px;
   font-size: 10px;
 }
 
 html {
-  font-family: 'muli', serif;
+  font-family: "muli", serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   height: 100%;
-
 }
 
 body {
@@ -26,13 +25,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
-
-
-  
 }
 
-
-#___gatsby, #gatsby-focus-wrapper{
+#___gatsby,
+#gatsby-focus-wrapper {
   height: 100%;
 }
 article,
@@ -212,7 +208,7 @@ textarea {
   font: inherit;
 }
 html {
-  font-family: 'muli', serif;
+  font-family: "muli", serif;
   box-sizing: border-box;
   overflow-y: scroll;
 }
@@ -227,7 +223,7 @@ html {
 }
 body {
   color: hsla(0, 0%, 0%, 0.8);
-  font-family: 'muli', serif;
+  font-family: "muli", serif;
   font-weight: normal;
   word-wrap: break-word;
   font-kerning: normal;
@@ -257,7 +253,7 @@ h1 {
   padding-top: 0;
   margin-bottom: 1.45rem;
   color: inherit;
-  font-family: 'muli', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "muli", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
   text-rendering: optimizeLegibility;
   font-size: 2.25rem;
@@ -647,8 +643,7 @@ pre tt:after {
   }
 }
 
-button{
-
+button {
   user-select: none;
   outline: none;
   cursor: pointer;
@@ -669,57 +664,49 @@ button{
   padding: 0 1.2rem 0.1rem;
   flex: 0 0 7.5%;
   transition: all 80ms linear;
- 
-
 }
 
-  button:hover, button:focus {
-    transform: translateY(0.1rem);
-    border: .1rem solid var(--blue);
+button:hover,
+button:focus {
+  transform: translateY(0.1rem);
+  border: 0.1rem solid var(--blue);
+}
+
+.gridLayout {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr 10rem 10rem;
+  padding-top: 2.5rem;
+}
+
+/*small-large phones in portrait*/
+
+@media (max-width: 767px) {
+  .gridLayout {
+    grid-template-rows: 45% 15% 15% 1fr;
+    grid-row-gap: 1rem;
+    height: 100%;
+    padding-top: 1rem;
   }
 
-  .gridLayout{
-    display: grid;
-    width: 100%;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: 1fr 10rem 10rem;
-    padding-top: 2.5rem;
+  h1 {
+    margin-block-end: 0.2rem;
   }
-
-
-  /*small-large phones in portrait*/
-
-  @media (max-width: 767px) {
-
-    .gridLayout{
-      grid-template-rows:  45% 15% 15% 1fr;
-      grid-row-gap: 1rem;
-      height: 100%;
-      padding-top: 1rem;
-    }
-
-    h1{
-      margin-block-end: .2rem;
-    }
-    
-  }
-
+}
 
 /*small-large phones in landscape*/
 
-  @media (orientation: landscape ) and (max-width: 830px){
-    .gridLayout{
-      grid-template-rows: 60% 1FR 1FR;
-      height: 100%;
-      grid-gap: 0;
-      grid-template-columns: repeat(9, 1fr);
-       }
-
-
-    button{
-      width: 25%;
-    }
-
+@media (orientation: landscape) and (max-width: 830px) {
+  .gridLayout {
+    grid-template-rows: 60% 1fr 1fr;
+    height: 100%;
+    grid-gap: 0;
+    grid-template-columns: repeat(9, 1fr);
   }
-    /* extra small phones in portrait*/
 
+  button {
+    width: 25%;
+  }
+}
+/* extra small phones in portrait*/

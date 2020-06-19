@@ -1,20 +1,18 @@
-.resetButton{
-    background-color: var(--pink);
-    width: 100%;
-    grid-area: 3/5/4/6;
-    align-self: flex-end;
-    justify-self: center;
-    font-size: 2.2rem;
+.resetButton {
+  background-color: var(--pink);
+  width: 100%;
+  grid-area: 3/5/4/6;
+  align-self: flex-end;
+  justify-self: center;
+  font-size: 2.2rem;
 }
 
-@media (orientation: landscape ) and (max-width: 830px){
-
-    .resetButton{
+@media (orientation: landscape) and (max-width: 830px) {
+  .resetButton {
     width: 20%;
     margin-top: 3rem;
     grid-area: 3/7/4/8;
-
-    }
+  }
 }
 
 /* @media (min-height: 375px) and (max-width: 736px) and (orientation: landscape) {
@@ -23,4 +21,3 @@
     margin-top: 2.5rem;
 }
 } */
-

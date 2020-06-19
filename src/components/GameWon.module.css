@@ -1,141 +1,125 @@
 .overlay {
-    position: fixed;
-    display: block; /* Hidden by default */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
-    cursor: pointer; /* Add a pointer on hover */
-  
+  position: fixed;
+  display: block; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  cursor: pointer; /* Add a pointer on hover */
 }
 
-.popout{
-    display: flex;
-    flex-flow: column wrap;
-    border: 0.1rem solid var(--border-color) transparent;
-    position: fixed;
-    bottom: 50%;
-    height: 40%;
-    width: 22.5%;
-    z-index: 25;
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    align-items: center;
-    justify-content: space-evenly;
-    background-color: var(--main-color);
-    padding: .1rem;
-    
+.popout {
+  display: flex;
+  flex-flow: column wrap;
+  border: 0.1rem solid var(--border-color) transparent;
+  position: fixed;
+  bottom: 50%;
+  height: 40%;
+  width: 22.5%;
+  z-index: 25;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: var(--main-color);
+  padding: 0.1rem;
 }
 
-.TimeForm{
-    margin-top: 1rem;
-    display: flex;
-    justify-content: space-between;
+.TimeForm {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
-.Message{
-    color: var(--pink); 
-    font-size: 1.25rem;
-    margin-left: 1rem;
+.Message {
+  color: var(--pink);
+  font-size: 1.25rem;
+  margin-left: 1rem;
 }
 
-.ButtonPlayAgain{
-    background-color: var(--green);
-
+.ButtonPlayAgain {
+  background-color: var(--green);
 }
 
-.ButtonSubmitTime{
-    background-color: var(--blue);
-    width: 20%;
-    font-size: 1.25rem;
-
+.ButtonSubmitTime {
+  background-color: var(--blue);
+  width: 20%;
+  font-size: 1.25rem;
 }
 
-
-
-  section{
-    font-size: 1.5rem;
-    color: white;
-    text-align: center;
-     
-  }
-
-  h1{
-    color:var(--pink)
-  }
-
-  .close{
-      position: absolute;
-      top: 0;
-      right: 0;
-      opacity: .3;
-      cursor: pointer;
-  }
-
-  .close::after, .close::before{
-      position: absolute;
-      content: '';
-      height: 2rem;
-      width: .25rem;
-      top: 0;
-      right: 1.1rem;
-      background-color: #ffffff;
-      
-
-  }
-
-  .close::after{
-    transform: rotate(45deg)      
-
-  }
-
-  .close::before{
-      transform: rotate(-45deg)
-  }
-
-  .close:hover{
-      opacity: 1;
-  }
-
-  @media (max-width: 767px) {
-    .popout{
-        width: 90%;
-        height: 50%;
-        bottom: 45%;
-    }
-
+section {
+  font-size: 1.5rem;
+  color: white;
+  text-align: center;
 }
 
+h1 {
+  color: var(--pink);
+}
 
-  @media (orientation: landscape ) and (max-width: 830px){
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0.3;
+  cursor: pointer;
+}
 
-    .popout{
-        bottom: 25%;
-        width: 60%;
-        height: 90%;
-        top: 2rem;
-    }
+.close::after,
+.close::before {
+  position: absolute;
+  content: "";
+  height: 2rem;
+  width: 0.25rem;
+  top: 0;
+  right: 1.1rem;
+  background-color: #ffffff;
+}
 
+.close::after {
+  transform: rotate(45deg);
+}
+
+.close::before {
+  transform: rotate(-45deg);
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .popout {
+    width: 90%;
+    height: 50%;
+    bottom: 45%;
   }
+}
 
-  @media (min-width: 768px) {
+@media (orientation: landscape) and (max-width: 830px) {
+  .popout {
+    bottom: 25%;
+    width: 60%;
+    height: 90%;
+    top: 2rem;
+  }
+}
 
-    .popout{
-        width: 60%;
-        }
+@media (min-width: 768px) {
+  .popout {
+    width: 60%;
+  }
 }
 
 @media (min-width: 1024px) {
-
-    .popout{
-        width: 40%;
-        }
+  .popout {
+    width: 40%;
+  }
 }
-
