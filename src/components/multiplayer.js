@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useRef,
   useCallback,
-  Fragment,
   createRef,
   forwardRef,
 } from "react"
@@ -379,15 +378,15 @@ const LobbyHeader = props => {
 
       <section className={styles.roomId}>
         Room #: {room.id}
-        <span
+        <a
+      
+          href ="#copy room"
           onClick={() => handleCopy(room.id)}
           className={styles.clipboard}
           title="copy room #"
-          role="img"
-          aria-label="copy"
         >
-          &#128203;
-        </span>
+          <span role = "img" aria-label = "copy button">&#128203;</span>
+        </a>
       </section>
       {winner && <section className={styles.winner}>{winner} wins!</section>}
     </div>
@@ -574,7 +573,7 @@ const PlayerCheckbox = forwardRef((props, ref) => {
     <div className={styles.playerCheckboxContainer}>
       <div className={styles.labelContainer}>
         <label
-          for={`Player${id}`}
+          htmlFor={`Player${id}`}
           className={id === "1" ? styles.playerOneLabel : styles.playerTwoLabel}
         >
           {id === "1" ? "Player 1" : "Player 2"}

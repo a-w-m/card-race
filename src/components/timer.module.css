@@ -4,6 +4,7 @@
   align-self: flex-start;
   text-align: center;
   margin-top: -1.25rem;
+  color: var(--main-color)
 }
 
 span:last-child {

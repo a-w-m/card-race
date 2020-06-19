@@ -8,6 +8,7 @@ import Timer from "../components/timer"
 import Scores from "../components/scores"
 import Player from "../components/player"
 import Multiplayer from "../components/multiplayer"
+import Title from "../components/title"
 
 //initialize socket connection
 
@@ -64,7 +65,7 @@ const App = () => {
         setStartTime={setStartTime}
         isMultiplayer={isMultiplayer}
       />
-
+      {!startTime && !isMultiplayer &&<Title></Title>}
       {!isMultiplayer && startTime && (
         <Timer
           timer={timer}

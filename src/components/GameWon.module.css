@@ -38,6 +38,11 @@
   justify-content: space-between;
 }
 
+.TimeForm > label > input {
+  height: 100%;
+  font: 400 1.5rem muli;
+}
+
 .Message {
   color: var(--pink);
   font-size: 1.25rem;
