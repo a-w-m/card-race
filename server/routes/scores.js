@@ -3,7 +3,7 @@ const router = express.Router()
 const { check, validationResult } = require("express-validator")
 const Score = require("../models/score")
 
-router.get("/", (req, res) => {
+router.get("/", (req, res, next) => {
   Score.find().then(scores => {
     res.json(scores)
   })

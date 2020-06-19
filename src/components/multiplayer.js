@@ -1,4 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback, Fragment, createRef, forwardRef } from "react"
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  Fragment,
+  createRef,
+  forwardRef,
+} from "react"
 import styles from "./multiplayer.module.css"
 import { popout } from "./GameWon.module.css"
 import { Overlay, CloseButton } from "./GameWon.js"
@@ -21,11 +29,11 @@ const Multiplayer = props => {
     setReset,
     reset,
     player,
-    setPlayer
+    setPlayer,
   } = props
 
   function handleCreateRoom() {
-    socket.emit("create room", "Player 1")
+    socket.emit("create room")
     setIsMultiplayer(true)
     setIsLobby(true)
     setPlayer(prev => {
@@ -42,6 +50,7 @@ const Multiplayer = props => {
     socket.emit("join request", input)
   }
 
+  //create socket listeners to handle multiplayer lobby (leave/join/disconnect)
   useEffect(() => {
     socket.on("created room", room => {
       setRoom({ id: room, clients: 1 })
@@ -76,8 +85,17 @@ const Multiplayer = props => {
         })
       }
     })
+
+    return () => {
+      socket.off("created room")
+      socket.off("joined room")
+      socket.off("failed join room")
+      socket.off("player 2 joined room")
+      socket.off("player disconnect")
+    }
   }, [socket, player, setIsMultiplayer, setPlayer])
 
+  //create socket listeners to handle multiplayer matched cards and winner
   useEffect(() => {
     socket.emit("multiplayerMatch", { matches, room })
 
@@ -86,16 +104,18 @@ const Multiplayer = props => {
     })
 
     socket.on("finish", name => {
-      if (winner=== null) {
+      if (winner === null) {
         setWinner(name)
       }
     })
 
     return () => {
       socket.off("finish")
+      socket.off("multiplayerMatch")
     }
   }, [socket, matches, setMultiplayerMatches, room, winner])
 
+  //create socket event to communicate winner
   useEffect(() => {
     if (isGameWon && isMultiplayer) {
       socket.emit("finish", { player, room })
@@ -108,8 +128,13 @@ const Multiplayer = props => {
   }, [socket, room, player, isGameWon, isMultiplayer, winner, reset])
 
   return (
-    <div className={styles.dropdownContainer} >
-      <button className={styles.dropdownButton} style = {isMultiplayer? {visibility: 'hidden'} : {}}>Multiplayer</button>
+    <div className={styles.dropdownContainer}>
+      <button
+        className={styles.dropdownButton}
+        style={isMultiplayer ? { visibility: "hidden" } : {}}
+      >
+        Multiplayer
+      </button>
       <div
         className={styles.dropdownContent}
         style={isLobby || joinPrompt ? { display: "none" } : {}}
@@ -136,6 +161,7 @@ const Multiplayer = props => {
           setIsMultiplayer={setIsMultiplayer}
           isLobby={isLobby}
           setIsLobby={setIsLobby}
+          setRoom={setRoom}
           setPlayer={setPlayer}
           player={player}
           winner={winner}
@@ -162,9 +188,8 @@ const JoinRoom = props => {
     handleClick()
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     inputEl.current.focus()
-
   })
   return (
     <div>
@@ -177,7 +202,7 @@ const JoinRoom = props => {
             name="roomPrompt"
             default="enter room #"
             value={input}
-            ref ={inputEl}
+            ref={inputEl}
             onChange={event => {
               setInput(event.target.value)
             }}
@@ -201,7 +226,9 @@ const Lobby = props => {
     isLobby,
     setIsLobby,
     player,
+    setPlayer,
     room,
+    setRoom,
     socket,
     winner,
     setWinner,
@@ -229,8 +256,8 @@ const Lobby = props => {
     }
   }, [whoIsReady, setReset])
 
-  useEffect(()=>{
-    if (!isLobby){
+  useEffect(() => {
+    if (!isLobby) {
       setWinner(null)
     }
   }, [isLobby, setWinner])
@@ -246,14 +273,16 @@ const Lobby = props => {
           ></LobbyHeader>
           <LobbyReadyForm
             isLobby={isLobby}
+            setPlayer={setPlayer}
             player={player}
+            setRoom={setRoom}
             room={room}
             socket={socket}
             setWhoIsReady={setWhoIsReady}
             whoIsReady={whoIsReady}
-            setWinner ={setWinner}
-            setIsLobby ={setIsLobby}
-            winner = {winner}
+            setWinner={setWinner}
+            setIsLobby={setIsLobby}
+            winner={winner}
           />
         </div>
         <CloseButton
@@ -284,9 +313,9 @@ const CountdownCircle = props => {
       count -= 1
       let remainingTime = (length * timeFraction(count, limit)).toFixed()
 
-      console.log(remainingTime)
       timeRemaining.current.style.strokeDasharray = `${remainingTime} ${length}`
 
+      //stroke array takes one more interval to disappear after count reaches 0
       if (count <= -1) {
         setIsLobby(false)
         setWinner(null)
@@ -326,7 +355,9 @@ const CountdownCircle = props => {
 
 const WaitingMessage = () => {
   return (
-  <section className={styles.waiting}>Waiting for second player to join</section>
+    <section className={styles.waiting}>
+      Waiting for second player to join
+    </section>
   )
 }
 
@@ -358,16 +389,29 @@ const LobbyHeader = props => {
           &#128203;
         </span>
       </section>
-      {winner && <section className ={styles.winner}>{winner} wins!</section>}
+      {winner && <section className={styles.winner}>{winner} wins!</section>}
     </div>
   )
 }
 
 const LobbyReadyForm = props => {
-  const { player, room, socket, setWhoIsReady, whoIsReady, isLobby, setIsLobby, setWinner, winner} = props
-  const inputPlayer1 = createRef();
-  const inputPlayer2 = createRef();
+  const {
+    socket,
+    player,
+    setPlayer,
+    room,
+    setRoom,
+    whoIsReady,
+    setWhoIsReady,
+    isLobby,
+    setIsLobby,
+    winner,
+    setWinner,
+  } = props
+  const inputPlayer1 = createRef()
+  const inputPlayer2 = createRef()
 
+  //create functions to add/remove players from whoIsReady array
   const addToReadyArray = useCallback(
     name => {
       setWhoIsReady(prev => prev.concat(name))
@@ -382,7 +426,7 @@ const LobbyReadyForm = props => {
     [setWhoIsReady]
   )
 
-
+  //create function to handle checkbox click
   function sendReadyStatus(ref) {
     if (ref.current.checked) {
       addToReadyArray(player.name)
@@ -393,93 +437,104 @@ const LobbyReadyForm = props => {
     }
   }
 
+  //create socket even to handle disconnect inside lobby
+  useEffect(() => {
+    socket.on("player disconnect", () => {
+      setWhoIsReady([])
+      setRoom(prev => {
+        return { ...prev, clients: 1 }
+      })
 
-  useEffect(()=>{
-
-
-
-    if (whoIsReady.length>= 0 && inputPlayer1.current!== null && inputPlayer2.current!==null){
-
-      inputPlayer1.current.checked = false;
-      inputPlayer2.current.checked = false;
-
-    whoIsReady.forEach(elem=>{
-      if(elem === "Player 1"){
-        inputPlayer1.current.checked = true
-      }else if (elem === "Player 2"){
-        inputPlayer2.current.checked = true
+      if (player.name === "Player 2") {
+        setPlayer(prev => {
+          return { ...prev, name: "Player 1" }
+        })
       }
     })
 
-  } 
+    return () => {
+      socket.off("player disconnect")
+    }
+  })
 
-    
+  //manage checkboxes when whoIsReady array changes
+  useEffect(() => {
+    if (
+      whoIsReady.length >= 0 &&
+      inputPlayer1.current !== null &&
+      inputPlayer2.current !== null
+    ) {
+      inputPlayer1.current.checked = false
+      inputPlayer2.current.checked = false
+
+      whoIsReady.forEach(elem => {
+        if (elem === "Player 1") {
+          inputPlayer1.current.checked = true
+        } else if (elem === "Player 2") {
+          inputPlayer2.current.checked = true
+        }
+      })
+    }
   }, [whoIsReady, inputPlayer1, inputPlayer2])
 
-
-
-  useEffect(()=>{
-
-    socket.on('isReady', ({name, isReady})=>{
-
-      if (isReady){
+  //create socket listener to handling opponent ready status
+  useEffect(() => {
+    socket.on("isReady", ({ name, isReady }) => {
+      if (isReady) {
         addToReadyArray(name)
-      }
-      else{
+      } else {
         removeFromReadyArray(name)
       }
     })
 
-    return ()=> socket.off('isReady')
-
+    return () => socket.off("isReady")
   })
 
-  useEffect(()=>{
-    if(winner!==null && winner!==player.name){
-      console.log('req')
-      socket.emit('getReadyStatus', room)
+  //create socket event that gets opponent ready status for player who doesn't win
+  useEffect(() => {
+    if (winner !== player.name) {
+      socket.emit("getReadyStatus", room)
     }
+  }, [player.name, room, socket, winner])
 
-  },[player.name, room, socket, winner])
-
-  useEffect(()=>{
-    socket.on('getReadyStatus', (room)=>{
-      console.log('req received', whoIsReady)
-      socket.emit('sendReadyStatus', ({room, whoIsReady}))
+  //create socket listener to handle requesting/sending opponent ready status
+  useEffect(() => {
+    socket.on("getReadyStatus", room => {
+      socket.emit("sendReadyStatus", { room, whoIsReady })
     })
 
-    socket.on('sendReadyStatus', whoIsReady=>{
-      console.log('response received', whoIsReady)
+    socket.on("sendReadyStatus", whoIsReady => {
+      //only update whoIsReady array is it contains a player, otherwise player 1 updates whoIsReady to empty array after player 2 joins lobby
+      if (whoIsReady.length >= 1) {
         setWhoIsReady(whoIsReady)
+      }
     })
 
-    return ()=>{
-      socket.off('getReadyStatus')
-      socket.off('sendReadyStatus')
+    return () => {
+      socket.off("getReadyStatus")
+      socket.off("sendReadyStatus")
     }
   })
 
-
+  //disable checkboxes when both players ready
   useEffect(() => {
     if (whoIsReady.length === 2) {
       inputPlayer1.current.disabled = "disabled"
-      inputPlayer2.current.disabled = 'disabled'
+      inputPlayer2.current.disabled = "disabled"
     }
   })
 
-
-
   return (
     <div className={styles.lobbyForm}>
-      {room.clients === 2 ? <section>Ready? Click checkbox to begin!</section>
-      :<WaitingMessage></WaitingMessage>}
+      <section>Ready? Click checkbox to begin!</section>
 
-           {whoIsReady.length === 2 && (
-            <CountdownCircle setIsLobby={setIsLobby} setWinner = {setWinner}></CountdownCircle>
-          )}
+      {whoIsReady.length === 2 && (
+        <CountdownCircle
+          setIsLobby={setIsLobby}
+          setWinner={setWinner}
+        ></CountdownCircle>
+      )}
       <div className={styles.ready}>
-      {room.clients === 2 && (<Fragment>
-
         <PlayerCheckbox
           isLobby={isLobby}
           whoIsReady={whoIsReady}
@@ -488,11 +543,11 @@ const LobbyReadyForm = props => {
           id="1"
           room={room}
           socket={socket}
-          winner ={winner}
-          ref = {inputPlayer1}
-          handleClick = {sendReadyStatus}
+          winner={winner}
+          ref={inputPlayer1}
+          handleClick={sendReadyStatus}
         ></PlayerCheckbox>
-     
+        {room.clients === 2 ? (
           <PlayerCheckbox
             whoIsReady={whoIsReady}
             setWhoIsReady={setWhoIsReady}
@@ -500,18 +555,17 @@ const LobbyReadyForm = props => {
             id="2"
             room={room}
             socket={socket}
-            winner = {winner}
-            ref = {inputPlayer2}
-            handleClick ={sendReadyStatus}
+            winner={winner}
+            ref={inputPlayer2}
+            handleClick={sendReadyStatus}
           ></PlayerCheckbox>
-          </Fragment> 
-        ) 
-        }
+        ) : (
+          <WaitingMessage />
+        )}
       </div>
     </div>
   )
 }
-
 
 const PlayerCheckbox = forwardRef((props, ref) => {
   const { player, id, handleClick } = props
@@ -519,7 +573,10 @@ const PlayerCheckbox = forwardRef((props, ref) => {
   return (
     <div className={styles.playerCheckboxContainer}>
       <div className={styles.labelContainer}>
-        <label for={`Player${id}`} className = {id==='1'? styles.playerOneLabel : styles.playerTwoLabel}>
+        <label
+          for={`Player${id}`}
+          className={id === "1" ? styles.playerOneLabel : styles.playerTwoLabel}
+        >
           {id === "1" ? "Player 1" : "Player 2"}
         </label>
       </div>

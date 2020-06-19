@@ -1,15 +1,16 @@
 import React from "react"
 import styles from "./player.module.css"
 
-const Player = props =>  {
+const Player = props => {
+  const { player } = props
 
-    const {player} = props
-
-    return(
-        <div className = {player === 'Player 1' ? styles.playerOne : styles.playerTwo}>
-         {player}
-        </div>
-    )
+  return (
+    <div
+      className={player === "Player 1" ? styles.playerOne : styles.playerTwo}
+    >
+      {player}
+    </div>
+  )
 }
 
-export default Player;
+export default Player

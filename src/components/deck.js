@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useRef} from "react"
+import React, { useState, useEffect, useRef } from "react"
 
 import Card from "./card.js"
 import icons from "./icons.module.css"
 import deckStyle from "./deck.module.css"
-
-
 
 const shuffle = arr => {
   let copy = [...arr]
@@ -28,22 +26,13 @@ const flipCardToFace = (deck, card) => {
 }
 
 const flipCardToBack = (deck, cards) => {
-
-    deck.forEach(card => {
-
-      cards.forEach(currentCard => { 
-
-
+  deck.forEach(card => {
+    cards.forEach(currentCard => {
       if (card.id === currentCard.id) {
         card.style = { transform: "rotateY(0deg)" }
       }
-
-
     })
   })
-
-
- 
 
   return [...deck]
 }
@@ -62,12 +51,11 @@ const checkMatch = cards => {
   }
 }
 
-
-const disableClick = (ref)=>{
-    ref.current.style.pointerEvents = "none" 
+const disableClick = ref => {
+  ref.current.style.pointerEvents = "none"
 }
 
-const enableClick = (ref) =>{
+const enableClick = ref => {
   ref.current.style.pointerEvents = "auto"
 }
 
@@ -91,24 +79,27 @@ const createDeck = () => {
   return initial
 }
 
-const Deck = (props) => {
-  const {setMatches, setDeckSize, reset, setReset, startTime, setStartTime} = props
+const Deck = props => {
+  const {
+    setMatches,
+    setDeckSize,
+    reset,
+    setReset,
+    startTime,
+    setStartTime,
+  } = props
   const [deck, setDeck] = useState(() => {
-    return (createDeck())
+    return createDeck()
   })
   const [currentCards, setCurrentCards] = useState([])
   const container = useRef(null)
 
   useEffect(() => {
     setDeckSize(deck.length)
-
   }, [setDeckSize, deck.length])
 
-  
-
   const handleClick = card => {
-
-    if (!startTime){
+    if (!startTime) {
       setStartTime(Date.now())
     }
 
@@ -120,19 +111,15 @@ const Deck = (props) => {
 
   useEffect(() => {
     if (currentCards.length === 2) {
-
       if (checkMatch(currentCards)) {
-
         setMatches(prev => prev.concat(currentCards))
 
         setCurrentCards([])
       } else if (!checkMatch(currentCards)) {
-
         disableClick(container)
         setCurrentCards([])
 
         setTimeout(() => {
-
           setDeck(prev => {
             return flipCardToBack(prev, currentCards)
           })
@@ -143,25 +130,20 @@ const Deck = (props) => {
     }
   }, [currentCards, setMatches])
 
-  useEffect(()=>{
-    if (reset){
-
+  useEffect(() => {
+    if (reset) {
       disableClick(container)
 
-      setTimeout( async ()=> {
-
+      setTimeout(async () => {
         setDeck(prev => {
           return flipCardToBack(prev, prev)
         })
 
         setCurrentCards([])
         setMatches([])
-      
-
       }, 500)
 
-      setTimeout( async ()=> {
-
+      setTimeout(async () => {
         setDeck(prev => {
           return shuffle(prev)
         })
@@ -169,16 +151,9 @@ const Deck = (props) => {
         setReset(!reset)
 
         enableClick(container)
-
-
-
-
       }, 1000)
-
     }
   }, [reset, setMatches, setReset, currentCards, setStartTime])
-
-  
 
   return (
     <div className={deckStyle.deckContainer} ref={container}>
@@ -190,7 +165,7 @@ const Deck = (props) => {
             className={card.className}
             handleClick={handleClick}
             style={card.style}
-            setStartTime = {setStartTime}
+            setStartTime={setStartTime}
           />
         )
       })}
