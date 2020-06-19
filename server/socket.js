@@ -50,9 +50,19 @@ const socketListener = io.on("connect", socket => {
   })
 
   socket.on('isReady', ({room, player, isReady})=>{
-    console.log(room, player, isReady)
     socket.broadcast.to(room.id).emit('isReady', {name: player.name, isReady})
   })
+
+  socket.on('getReadyStatus', (room)=>{
+    socket.broadcast.to(room.id).emit('getReadyStatus', room)
+  })
+
+  socket.on('sendReadyStatus', ({room, whoIsReady})=>{
+    console.log(whoIsReady)
+    socket.broadcast.to(room.id).emit('sendReadyStatus', whoIsReady)
+  })
+
+
 
 
   

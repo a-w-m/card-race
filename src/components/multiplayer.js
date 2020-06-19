@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, Fragment } from "react"
+import React, { useState, useEffect, useRef, useCallback, Fragment, createRef, forwardRef } from "react"
 import styles from "./multiplayer.module.css"
 import { popout } from "./GameWon.module.css"
 import { Overlay, CloseButton } from "./GameWon.js"
@@ -365,6 +365,109 @@ const LobbyHeader = props => {
 
 const LobbyReadyForm = props => {
   const { player, room, socket, setWhoIsReady, whoIsReady, isLobby, setIsLobby, setWinner, winner} = props
+  const inputPlayer1 = createRef();
+  const inputPlayer2 = createRef();
+
+  const addToReadyArray = useCallback(
+    name => {
+      setWhoIsReady(prev => prev.concat(name))
+    },
+    [setWhoIsReady]
+  )
+
+  const removeFromReadyArray = useCallback(
+    name => {
+      setWhoIsReady(prev => prev.filter(elem => elem !== name))
+    },
+    [setWhoIsReady]
+  )
+
+
+  function sendReadyStatus(ref) {
+    if (ref.current.checked) {
+      addToReadyArray(player.name)
+      socket.emit("isReady", { room, player, isReady: true })
+    } else {
+      removeFromReadyArray(player.name)
+      socket.emit("isReady", { room, player, isReady: false })
+    }
+  }
+
+
+  useEffect(()=>{
+
+
+
+    if (whoIsReady.length>= 0 && inputPlayer1.current!== null && inputPlayer2.current!==null){
+
+      inputPlayer1.current.checked = false;
+      inputPlayer2.current.checked = false;
+
+    whoIsReady.forEach(elem=>{
+      if(elem === "Player 1"){
+        inputPlayer1.current.checked = true
+      }else if (elem === "Player 2"){
+        inputPlayer2.current.checked = true
+      }
+    })
+
+  } 
+
+    
+  }, [whoIsReady, inputPlayer1, inputPlayer2])
+
+
+
+  useEffect(()=>{
+
+    socket.on('isReady', ({name, isReady})=>{
+
+      if (isReady){
+        addToReadyArray(name)
+      }
+      else{
+        removeFromReadyArray(name)
+      }
+    })
+
+    return ()=> socket.off('isReady')
+
+  })
+
+  useEffect(()=>{
+    if(winner!==null && winner!==player.name){
+      console.log('req')
+      socket.emit('getReadyStatus', room)
+    }
+
+  },[player.name, room, socket, winner])
+
+  useEffect(()=>{
+    socket.on('getReadyStatus', (room)=>{
+      console.log('req received', whoIsReady)
+      socket.emit('sendReadyStatus', ({room, whoIsReady}))
+    })
+
+    socket.on('sendReadyStatus', whoIsReady=>{
+      console.log('response received', whoIsReady)
+        setWhoIsReady(whoIsReady)
+    })
+
+    return ()=>{
+      socket.off('getReadyStatus')
+      socket.off('sendReadyStatus')
+    }
+  })
+
+
+  useEffect(() => {
+    if (whoIsReady.length === 2) {
+      inputPlayer1.current.disabled = "disabled"
+      inputPlayer2.current.disabled = 'disabled'
+    }
+  })
+
+
 
   return (
     <div className={styles.lobbyForm}>
@@ -386,6 +489,8 @@ const LobbyReadyForm = props => {
           room={room}
           socket={socket}
           winner ={winner}
+          ref = {inputPlayer1}
+          handleClick = {sendReadyStatus}
         ></PlayerCheckbox>
      
           <PlayerCheckbox
@@ -396,6 +501,8 @@ const LobbyReadyForm = props => {
             room={room}
             socket={socket}
             winner = {winner}
+            ref = {inputPlayer2}
+            handleClick ={sendReadyStatus}
           ></PlayerCheckbox>
           </Fragment> 
         ) 
@@ -405,73 +512,9 @@ const LobbyReadyForm = props => {
   )
 }
 
-const PlayerCheckbox = props => {
-  const { isLobby, room, player, id, socket, setWhoIsReady, whoIsReady } = props
 
-  const input = useRef()
-
-  const addToReadyArray = useCallback(
-    name => {
-      setWhoIsReady(prev => prev.concat(name))
-    },
-    [setWhoIsReady]
-  )
-
-  const removeFromReadyArray = useCallback(
-    name => {
-      setWhoIsReady(prev => prev.filter(elem => elem !== name))
-    },
-    [setWhoIsReady]
-  )
-
-  function sendReadyStatus(ref) {
-    if (ref.current.checked) {
-      addToReadyArray(player.name)
-      socket.emit("isReady", { room, player, isReady: true })
-    } else {
-      removeFromReadyArray(player.name)
-      socket.emit("isReady", { room, player, isReady: false })
-    }
-  }
-
-  function handleReadyStatus(data) {
-    const { name, isReady, ref } = data
-    if (name.slice(-1) === ref.current.id.slice(-1) && isReady) {
-      ref.current.checked = true
-    } else if (name.slice(-1) === ref.current.id.slice(-1) && !isReady) {
-      ref.current.checked = false
-    }
-  }
-
-  function setReadyArray(ref, add, remove) {
-    if (ref.current.checked) {
-      add(ref.current.id)
-    } else {
-      remove(ref.current.id)
-    }
-  }
-
-  useEffect(() => {
-    console.log(input)
-
-    socket.on("isReady", ({ name, isReady }) => {
-      if (name.slice(-1) === input.current.id.slice(-1)) {
-        handleReadyStatus({ name, isReady, ref: input })
-        setReadyArray(input, addToReadyArray, removeFromReadyArray)
-      }
-    })
-
-    return () => {
-      socket.off("isReady")
-    }
-  }, [socket, isLobby, addToReadyArray, removeFromReadyArray])
-
-  useEffect(() => {
-    if (whoIsReady.length === 2) {
-      input.current.disabled = "disabled"
-    }
-  })
-
+const PlayerCheckbox = forwardRef((props, ref) => {
+  const { player, id, handleClick } = props
 
   return (
     <div className={styles.playerCheckboxContainer}>
@@ -484,13 +527,13 @@ const PlayerCheckbox = props => {
         <input
           type="checkbox"
           id={`Player${id}`}
-          ref={input}
-          onClick={() => sendReadyStatus(input)}
+          ref={ref}
+          onClick={() => handleClick(ref)}
           disabled={player.name.slice(-1) !== id ? "disabled" : ""}
         />
       </div>
     </div>
   )
-}
+})
 
 export default Multiplayer
