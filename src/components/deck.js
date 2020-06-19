@@ -89,10 +89,14 @@ const Deck = props => {
     setStartTime,
   } = props
   const [deck, setDeck] = useState(() => {
-    return shuffle(createDeck())
+    return createDeck()
   })
   const [currentCards, setCurrentCards] = useState([])
   const container = useRef(null)
+
+  useEffect(()=>{
+    setDeck(shuffle(deck))
+  },[])
 
   useEffect(() => {
     setDeckSize(deck.length)
