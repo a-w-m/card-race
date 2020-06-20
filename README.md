@@ -26,13 +26,13 @@
 ## Screenshots
 
 - Main
-![Screenshot](assets\card-race-single.png)
+![Screenshot](assets/card-race-single.png)
 
 - Lobby
-![Screenshot](assets\card-race-lobby.png)
+![Screenshot](assets/card-race-lobby.png)
 
 - Multiplayer
-![Add Comment](assets\card-race-multiplayer.png)
+![Add Comment](assets/card-race-multiplayer.png)
 ---
 
 ## Installation
