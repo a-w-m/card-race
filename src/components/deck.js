@@ -95,7 +95,7 @@ const Deck = props => {
   const container = useRef(null)
 
   useEffect(()=>{
-    setDeck(shuffle(deck))
+    setDeck(prev=>shuffle(prev))
   },[])
 
   useEffect(() => {

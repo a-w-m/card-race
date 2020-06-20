@@ -6,7 +6,7 @@
 
 .scene:hover,
 .scene:focus {
-  border: 0.2rem solid var(--blue);
+outline: 0;
 }
 
 .card {
@@ -19,6 +19,11 @@
   position: relative;
   transition: transform 1s;
   transform-style: preserve-3d;
+}
+
+.card:hover,
+.card:focus {
+border: 0.2rem solid var(--blue);
 }
 
 .cardFace {
