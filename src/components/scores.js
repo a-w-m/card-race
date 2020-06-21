@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import styles from "./scores.module.css"
 
 const Scores = props => {
+  const {submitMessage} = props
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const Scores = props => {
     }
 
     fetchData()
-  }, [])
+  }, [submitMessage])
 
   return (
     <div className={styles.gridScores}>

@@ -38,6 +38,7 @@ const App = () => {
   const [isMultiplayer, setIsMultiplayer] = useState(false)
   const [player, setPlayer] = useState({ name: "" })
   const [multiplayerMatches, setMultiplayerMatches] = useState([])
+  const [submitMessage, setSubmitMessage] = useState("")
 
   useEffect(() => {
     if (matches.length === deckSize) {
@@ -65,7 +66,7 @@ const App = () => {
         setStartTime={setStartTime}
         isMultiplayer={isMultiplayer}
       />
-      {!startTime && !isMultiplayer &&<Title></Title>}
+      {!startTime && !isMultiplayer && <Title></Title>}
       {!isMultiplayer && startTime && (
         <Timer
           timer={timer}
@@ -75,13 +76,20 @@ const App = () => {
         ></Timer>
       )}
       {!isMultiplayer && <Reset setReset={setReset} />}
-      {!isMultiplayer && <Scores></Scores>}
+      {!isMultiplayer && (
+        <Scores
+          submitMessage={submitMessage}
+          setSubmitMessage={setSubmitMessage}
+        ></Scores>
+      )}
       {isGameWon && !isMultiplayer && (
         <GameWon
           setGameWon={setGameWon}
           endTime={timer}
           setReset={setReset}
           isGameWon={isGameWon}
+          submitMessage={submitMessage}
+          setSubmitMessage={setSubmitMessage}
         />
       )}
       <Matches

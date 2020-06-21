@@ -3,22 +3,33 @@ import styles from "./GameWon.module.css"
 import axios from "axios"
 
 const GameWon = props => {
+
+  const {endTime, isGameWon, setGameWon, setReset, submitMessage, setSubmitMessage} = props
+
+
+
   return (
     <div>
       <PopOut
-        endTime={props.endTime}
-        setGameWon={props.setGameWon}
-        setReset={props.setReset}
-        isGameWon={props.isGameWon}
+        endTime={endTime}
+        setGameWon={setGameWon}
+        setReset={setReset}
+        isGameWon={isGameWon}
+        submitMessage = {submitMessage} 
+        setSubmitMessage ={setSubmitMessage}
       />
       <Overlay />
     </div>
   )
 }
 const PopOut = props => {
+
+  const {endTime, submitMessage, setSubmitMessage, setGameWon, setReset } = props
+
   function handleClick(e) {
-    props.setGameWon(false)
-    props.setReset(true)
+    setGameWon(false)
+    setReset(true)
+    setSubmitMessage("")
   }
 
   function handleKeyDown(e) {
@@ -32,9 +43,9 @@ const PopOut = props => {
   return (
     <div className={styles.popout}>
       <h1>You Win!</h1>
-      <section>Your time was {`${props.endTime}`} seconds</section>
+      <section>Your time was {`${endTime}`} seconds</section>
       <section>Enter your name to submit your time to the leaderboard:</section>
-      <TimeForm endTime={props.endTime} setGameWon={props.setGameWon} />
+      <TimeForm endTime={endTime} setGameWon={setGameWon}  submitMessage = {submitMessage} setSubmitMessage ={setSubmitMessage} />
       <Replay handleClick={handleClick} />
       <CloseButton
         handleClick={handleClick}
@@ -45,6 +56,8 @@ const PopOut = props => {
 }
 
 export const CloseButton = props => {
+
+  const {handleClick, handleKeyDown} = props
   const closeButton = useRef(null)
 
   useEffect(() => {
@@ -55,8 +68,8 @@ export const CloseButton = props => {
     <div>
       <div
         className={styles.close}
-        onClick={props.handleClick}
-        onKeyDown={props.handleKeyDown}
+        onClick={handleClick}
+        onKeyDown={handleKeyDown}
         ref={closeButton}
         tabIndex="-1"
         role="button"
@@ -66,8 +79,9 @@ export const CloseButton = props => {
 }
 
 const TimeForm = props => {
-  const [input, setInput] = useState()
-  const [submitMessage, setSubmitMessage] = useState()
+
+  const {submitMessage, setSubmitMessage} = props
+  const [input, setInput] = useState('')
   const submitButton = useRef()
 
   function handleSubmit(e) {
@@ -80,7 +94,6 @@ const TimeForm = props => {
         { name: input, time: props.endTime }
       )
       .then(res => {
-        console.log(res)
         if (res.status === 200) {
           setSubmitMessage("Success")
           submitButton.current.setAttribute("disabled", true)
